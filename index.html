@@ -1420,29 +1420,6 @@
     </section>
 
     
-    <!-- Free-to-watch films: Blender Foundation open movies under Creative Commons licences -->
-    <section class="section free-watch-section" aria-labelledby="freeWatchTitle">
-        <h2 id="freeWatchTitle">🍿 Free to Watch</h2>
-        <p>Watch these openly licensed short films directly on SammyFlix. Select a film to open the video player.</p>
-        <div class="free-watch-grid">
-            <article class="free-watch-card">
-                <div class="free-watch-art"><span>Animation · 2008 · 10 min</span><strong>Big Buck Bunny</strong></div>
-                <div class="free-watch-info">
-                    <p>A gentle giant rabbit enjoys a sunny day in the forest before a group of cheeky rodents disturb his peace.</p>
-                    <button class="watch-now-btn" onclick="openFreeMovie('Big Buck Bunny','aqz-KE-bpKQ','© Blender Foundation, 2008. Licensed under Creative Commons Attribution 3.0. Include the film credits when showing the complete film.')">▶ Watch Now</button>
-                </div>
-            </article>
-            <article class="free-watch-card">
-                <div class="free-watch-art"><span>Fantasy · 2010 · 15 min</span><strong>Sintel</strong></div>
-                <div class="free-watch-info">
-                    <p>A young woman sets out on a journey to find the dragon friend she has lost.</p>
-                    <button class="watch-now-btn" onclick="openFreeMovie('Sintel','eRsGyueVLvQ','© Blender Foundation, 2010. Licensed under Creative Commons Attribution 3.0. Include the film credits when showing the complete film.')">▶ Watch Now</button>
-                </div>
-            </article>
-        </div>
-        <p class="player-credit">Film credits: <a href="https://peach.blender.org/about/" target="_blank" rel="noopener">Big Buck Bunny licence</a> · <a href="https://durian.blender.org/about/" target="_blank" rel="noopener">Sintel licence</a>. Films are streamed by YouTube; SammyFlix does not host the video files.</p>
-    </section>
-
     <!-- Entertainment Section -->
     <section class="section">
 
@@ -1627,7 +1604,9 @@
             { title: "Jurassic World", genre: "Adventure", year: 2015, summary: "A dinosaur theme park faces an unexpected crisis.", officialUrl: "https://www.jurassicworld.com/" },
             { title: "Coco", genre: "Adventure", year: 2017, summary: "A young musician discovers his family's history in a colourful world.", officialUrl: "https://movies.disney.com/coco" },
             { title: "The Super Mario Bros. Movie", genre: "Comedy", year: 2023, summary: "Mario and Luigi enter a colourful world full of adventure.", officialUrl: "https://www.thesupermariobros.movie/" },
-            { title: "Avatar: The Way of Water", genre: "Adventure", year: 2022, summary: "The Sully family explores the oceans of Pandora.", officialUrl: "https://www.avatar.com/movies/avatar-the-way-of-water" }
+            { title: "Avatar: The Way of Water", genre: "Adventure", year: 2022, summary: "The Sully family explores the oceans of Pandora.", officialUrl: "https://www.avatar.com/movies/avatar-the-way-of-water" },
+            { title: "Big Buck Bunny", genre: "Animation", year: 2008, summary: "A gentle rabbit enjoys a peaceful day in the forest in this openly licensed animated short film.", officialUrl: "https://peach.blender.org/about/" },
+            { title: "Sintel", genre: "Fantasy", year: 2010, summary: "A young woman journeys to find her lost dragon friend in this openly licensed animated short film.", officialUrl: "https://durian.blender.org/about/" }
         ].map(movie => ({ ...movie, type: "Movie", image: ({
             "Avengers: Endgame": "https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg",
             "Spider-Man: No Way Home": "https://image.tmdb.org/t/p/w500/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg",
@@ -1640,7 +1619,12 @@
             "Jurassic World": "https://image.tmdb.org/t/p/w500/rhr4y79GpxQF9IsfJItRxY6aoTx.jpg",
             "Coco": "https://image.tmdb.org/t/p/w500/gGEsBPAijhVUFoiNpgZXqRVWJt2.jpg",
             "The Super Mario Bros. Movie": "https://image.tmdb.org/t/p/w500/qNBAXBIQJnR4MiGPqLX0w3B.jpg",
-            "Avatar: The Way of Water": "https://image.tmdb.org/t/p/w500/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg"
+            "Avatar: The Way of Water": "https://image.tmdb.org/t/p/w500/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg",
+            "Big Buck Bunny": "https://peach.blender.org/wp-content/uploads/title_anouncement.jpg?x11217",
+            "Sintel": "https://durian.blender.org/wp-content/uploads/2010/05/sintel_poster.jpg"
+        })[movie.title] || "", videoId: ({
+            "Big Buck Bunny": "aqz-KE-bpKQ",
+            "Sintel": "eRsGyueVLvQ"
         })[movie.title] || "" }));
 
         const games = [
@@ -1842,6 +1826,13 @@
                 const detailsButton = document.createElement("button"); detailsButton.className = "small-btn"; detailsButton.textContent = "Details"; detailsButton.onclick = () => showDetails(item);
                 const favoriteButton = document.createElement("button"); favoriteButton.className = "small-btn favorite"; favoriteButton.textContent = isFavorite ? "♥ Saved" : "♡ Save"; favoriteButton.onclick = () => toggleFavorite(item.title);
                 buttons.append(detailsButton, favoriteButton);
+                if (item.videoId) {
+                    const watchButton = document.createElement("button");
+                    watchButton.className = "small-btn";
+                    watchButton.textContent = "▶ Watch Now";
+                    watchButton.onclick = () => openFreeMovie(item.title, item.videoId, item.title === "Big Buck Bunny" ? "© Blender Foundation, 2008. Creative Commons Attribution 3.0. Include the full film credits." : "© Blender Foundation, 2010. Creative Commons Attribution 3.0. Include the full film credits.");
+                    buttons.appendChild(watchButton);
+                }
                 const officialActions = document.createElement("div"); officialActions.className = "official-actions";
                 const officialLink = document.createElement("a"); officialLink.className = "official-link"; officialLink.href = item.officialUrl || getOfficialFallback(item); officialLink.target = "_blank"; officialLink.rel = "noopener"; officialLink.textContent = item.type === "Game" ? "Official Game" : item.type === "TV Show" ? "Show Info" : "Movie Info";
                 const trailerLink = document.createElement("a"); trailerLink.className = "official-link youtube"; trailerLink.href = getYouTubeSearchUrl(item); trailerLink.target = "_blank"; trailerLink.rel = "noopener"; trailerLink.textContent = "▶ Trailer";
