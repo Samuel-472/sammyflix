@@ -1571,7 +1571,20 @@
             { title: "Coco", genre: "Adventure", year: 2017, summary: "A young musician discovers his family's history in a colourful world.", officialUrl: "https://movies.disney.com/coco" },
             { title: "The Super Mario Bros. Movie", genre: "Comedy", year: 2023, summary: "Mario and Luigi enter a colourful world full of adventure.", officialUrl: "https://www.thesupermariobros.movie/" },
             { title: "Avatar: The Way of Water", genre: "Adventure", year: 2022, summary: "The Sully family explores the oceans of Pandora.", officialUrl: "https://www.avatar.com/movies/avatar-the-way-of-water" }
-        ].map(movie => ({ ...movie, type: "Movie", image: "" }));
+        ].map(movie => ({ ...movie, type: "Movie", image: ({
+            "Avengers: Endgame": "https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg",
+            "Spider-Man: No Way Home": "https://image.tmdb.org/t/p/w500/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg",
+            "The Lion King": "https://image.tmdb.org/t/p/w500/dzBtMocZuBjLOXvrl4zGYigDzh.jpg",
+            "Jumanji: Welcome to the Jungle": "https://image.tmdb.org/t/p/w500/bXrZ5iHBEjH7WMidbUDQ0U2xbmr.jpg",
+            "Black Panther": "https://image.tmdb.org/t/p/w500/uxzzxijgPIY7slzFvMotPv8wjKA.jpg",
+            "Inside Out": "https://image.tmdb.org/t/p/w500/2H1TmgdfNtsKlU9jKdeuyK8Ztos.jpg",
+            "Finding Nemo": "https://image.tmdb.org/t/p/w500/eHuGQ10FUzK1mdOY69wF5pGgEf5.jpg",
+            "The Incredibles": "https://image.tmdb.org/t/p/w500/2LqaLgk4Z226KkgPJuiOQ58wvrm.jpg",
+            "Jurassic World": "https://image.tmdb.org/t/p/w500/rhr4y79GpxQF9IsfJItRxY6aoTx.jpg",
+            "Coco": "https://image.tmdb.org/t/p/w500/gGEsBPAijhVUFoiNpgZXqRVWJt2.jpg",
+            "The Super Mario Bros. Movie": "https://image.tmdb.org/t/p/w500/qNBAXBIQJnR4MiGPqLX0w3B.jpg",
+            "Avatar: The Way of Water": "https://image.tmdb.org/t/p/w500/t6HIqrRAclMCA60NsSmeqe9RmNV.jpg"
+        })[movie.title] || "" }));
 
         const games = [
             {
