@@ -856,6 +856,155 @@
         body.light-theme .arcade-card p, body.light-theme .arcade-intro { color:#555; }
         @media(max-width:600px){ .ttt-cell{width:72px;height:72px}.memory-card{width:60px;height:60px} }
 
+    
+        /* HEADER AND PAGE LAYOUT REFINEMENT */
+        header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 12px 18px;
+            padding: 12px clamp(18px, 3.5vw, 56px);
+        }
+
+        .logo {
+            flex: 0 0 auto;
+            font-size: clamp(24px, 2.2vw, 32px);
+            line-height: 1;
+        }
+
+        header nav {
+            flex: 1 1 470px;
+            min-width: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            flex-wrap: wrap;
+            gap: 10px 18px;
+        }
+
+        header nav a {
+            display: inline-flex;
+            align-items: center;
+            min-height: 36px;
+            white-space: nowrap;
+            font-size: 14px;
+        }
+
+        header > .sammyflix-icon,
+        header > .account-controls,
+        header > .upgrade-btn,
+        header > .notification-wrap {
+            flex: 0 0 auto;
+        }
+
+        .account-controls {
+            gap: 7px;
+            white-space: nowrap;
+        }
+
+        .account-btn,
+        header .upgrade-btn {
+            min-height: 38px;
+            white-space: nowrap;
+            padding: 9px 12px;
+        }
+
+        header .search {
+            flex: 1 1 220px;
+            width: auto;
+            max-width: 300px;
+            min-width: 180px;
+        }
+
+        .section {
+            width: min(100%, 1600px);
+            margin: 0 auto;
+            padding-left: clamp(18px, 4vw, 64px);
+            padding-right: clamp(18px, 4vw, 64px);
+        }
+
+        .movies {
+            grid-template-columns: repeat(auto-fill, minmax(min(100%, 175px), 1fr));
+            align-items: stretch;
+        }
+
+        .card {
+            min-width: 0;
+        }
+
+        .card-info h3 {
+            overflow-wrap: anywhere;
+        }
+
+        @media (max-width: 900px) {
+            header nav {
+                order: 10;
+                flex: 1 1 100%;
+                justify-content: flex-start;
+                overflow-x: auto;
+                flex-wrap: nowrap;
+                padding: 4px 0;
+            }
+
+            header .search {
+                flex: 1 1 220px;
+                max-width: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header {
+                gap: 10px;
+                padding: 12px 4%;
+            }
+
+            .logo {
+                font-size: 25px;
+            }
+
+            header nav {
+                gap: 8px 18px;
+            }
+
+            header nav a {
+                font-size: 13px;
+            }
+
+            header .search {
+                order: 11;
+                flex: 1 1 100%;
+                max-width: none;
+            }
+
+            .account-controls {
+                margin-left: auto;
+            }
+
+            .hero {
+                min-height: 360px;
+                padding: 55px 6%;
+            }
+
+            .hero h1 {
+                font-size: clamp(32px, 9vw, 44px);
+            }
+
+            .section {
+                padding-top: 25px;
+                padding-bottom: 25px;
+            }
+
+            .movies {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 12px;
+            }
+
+            .poster {
+                height: 190px;
+            }
+        }
+
     </style>
 </head>
 
