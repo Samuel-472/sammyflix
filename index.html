@@ -1322,7 +1322,29 @@
             }
         }
 
-</style>
+
+        /* Free-to-watch licensed film section */
+        .free-watch-section { margin: 28px 0 36px; }
+        .free-watch-section > p { color: #aaa; margin: 8px 0 18px; line-height: 1.5; }
+        .free-watch-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
+        .free-watch-card { overflow: hidden; background: #191919; border: 1px solid #383838; border-radius: 10px; }
+        .free-watch-art { min-height: 185px; display: flex; flex-direction: column; justify-content: end; padding: 18px; background: linear-gradient(145deg, #244b39, #101b18 70%); }
+        .free-watch-card:nth-child(2) .free-watch-art { background: linear-gradient(145deg, #314d77, #171426 72%); }
+        .free-watch-art span { color: #f3f3f3; font-size: 12px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; }
+        .free-watch-art strong { color: #fff; font-size: 25px; line-height: 1.1; margin-top: 8px; text-shadow: 0 2px 12px #000; }
+        .free-watch-info { padding: 15px; }
+        .free-watch-info p { color: #bbb; font-size: 13px; line-height: 1.5; margin: 7px 0 13px; }
+        .watch-now-btn { border: 0; border-radius: 6px; background: #e50914; color: white; font-weight: 700; padding: 10px 16px; cursor: pointer; }
+        .watch-now-btn:hover { background: #b80710; }
+        .player-box { background: #151515; border: 1px solid #444; border-radius: 10px; width: min(960px, 100%); padding: 18px; box-shadow: 0 15px 50px #000a; }
+        .player-frame { width: 100%; aspect-ratio: 16 / 9; border: 0; background: #000; display: block; border-radius: 7px; }
+        .player-credit { color: #bbb; font-size: 12px; line-height: 1.5; margin: 12px 0 0; }
+        .player-heading { color: white; font-size: 21px; margin: 8px 0 14px; }
+        body.light-theme .free-watch-card { background: #fff; border-color: #ddd; }
+        body.light-theme .free-watch-info p, body.light-theme .free-watch-section > p { color: #555; }
+        @media (max-width: 600px) { .player-box { padding: 10px; } .free-watch-art { min-height: 150px; } }
+
+    </style>
 </head>
 
 <body>
@@ -1397,6 +1419,30 @@
         </div>
     </section>
 
+    
+    <!-- Free-to-watch films: Blender Foundation open movies under Creative Commons licences -->
+    <section class="section free-watch-section" aria-labelledby="freeWatchTitle">
+        <h2 id="freeWatchTitle">🍿 Free to Watch</h2>
+        <p>Watch these openly licensed short films directly on SammyFlix. Select a film to open the video player.</p>
+        <div class="free-watch-grid">
+            <article class="free-watch-card">
+                <div class="free-watch-art"><span>Animation · 2008 · 10 min</span><strong>Big Buck Bunny</strong></div>
+                <div class="free-watch-info">
+                    <p>A gentle giant rabbit enjoys a sunny day in the forest before a group of cheeky rodents disturb his peace.</p>
+                    <button class="watch-now-btn" onclick="openFreeMovie('Big Buck Bunny','aqz-KE-bpKQ','© Blender Foundation, 2008. Licensed under Creative Commons Attribution 3.0. Include the film credits when showing the complete film.')">▶ Watch Now</button>
+                </div>
+            </article>
+            <article class="free-watch-card">
+                <div class="free-watch-art"><span>Fantasy · 2010 · 15 min</span><strong>Sintel</strong></div>
+                <div class="free-watch-info">
+                    <p>A young woman sets out on a journey to find the dragon friend she has lost.</p>
+                    <button class="watch-now-btn" onclick="openFreeMovie('Sintel','eRsGyueVLvQ','© Blender Foundation, 2010. Licensed under Creative Commons Attribution 3.0. Include the film credits when showing the complete film.')">▶ Watch Now</button>
+                </div>
+            </article>
+        </div>
+        <p class="player-credit">Film credits: <a href="https://peach.blender.org/about/" target="_blank" rel="noopener">Big Buck Bunny licence</a> · <a href="https://durian.blender.org/about/" target="_blank" rel="noopener">Sintel licence</a>. Films are streamed by YouTube; SammyFlix does not host the video files.</p>
+    </section>
+
     <!-- Entertainment Section -->
     <section class="section">
 
@@ -1462,6 +1508,17 @@
         <div class="movies" id="contentList"></div>
 
     </section>
+
+    
+    <!-- SammyFlix in-page video player -->
+    <div class="details-modal" id="freeMoviePlayer" onclick="closeFreeMovie(event)" role="dialog" aria-modal="true" aria-labelledby="freeMovieTitle">
+        <div class="player-box">
+            <button class="close-modal" onclick="closeFreeMovie()" aria-label="Close player">&times;</button>
+            <h2 class="player-heading" id="freeMovieTitle">Now Playing</h2>
+            <iframe class="player-frame" id="freeMovieFrame" title="SammyFlix movie player" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <p class="player-credit" id="freeMovieCredit"></p>
+        </div>
+    </div>
 
     <!-- Details window -->
     <div class="details-modal" id="detailsModal" onclick="closeDetails(event)">
@@ -1950,6 +2007,25 @@
                 document.getElementById("detailsModal").classList.remove("open");
             }
         });
+
+        
+        // Play openly licensed short films in the SammyFlix video player.
+        function openFreeMovie(title, videoId, credit) {
+            const player = document.getElementById("freeMoviePlayer");
+            const frame = document.getElementById("freeMovieFrame");
+            document.getElementById("freeMovieTitle").textContent = title;
+            document.getElementById("freeMovieCredit").textContent = credit;
+            frame.src = "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(videoId) + "?autoplay=1&rel=0";
+            player.classList.add("open");
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeFreeMovie(event) {
+            if (event && event.target !== document.getElementById("freeMoviePlayer")) return;
+            document.getElementById("freeMoviePlayer").classList.remove("open");
+            document.getElementById("freeMovieFrame").src = "";
+            document.body.style.overflow = "";
+        }
 
         // Load movies locally and TV show information from TVmaze.
         displayContent(games);
