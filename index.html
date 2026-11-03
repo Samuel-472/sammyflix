@@ -1686,10 +1686,11 @@
         }
 
         // Load the built-in movie list. No broken third-party movie API is required.
-        async function loadMovies() {
+        function loadMovies() {
+            // Keep the movie catalogue available immediately, even if another service is offline.
             movieCatalog = movieCatalogueData.slice();
             moviesLoaded = true;
-            setStatus(`Loaded ${movieCatalog.length} movies, ${tvMazeShows.length} TV shows and ${games.length} games where available.`);
+            setStatus(`Loaded ${movieCatalog.length} movies. Select Movies to see the full catalogue.`);
             renderCurrentView();
         }
 
@@ -1996,11 +1997,22 @@
             const video = document.getElementById("freeMovieFrame");
             document.getElementById("freeMovieTitle").textContent = title;
             document.getElementById("freeMovieCredit").textContent = credit || "";
+            video.onerror = () => {
+                const creditLine = document.getElementById("freeMovieCredit");
+                creditLine.textContent = "This video could not stream from its current source. Open the official Blender Films collection to find the film: https://studio.blender.org/films/";
+                creditLine.style.color = "#ffb3b3";
+            };
+            video.onloadeddata = () => {
+                const creditLine = document.getElementById("freeMovieCredit");
+                creditLine.textContent = credit || "";
+                creditLine.style.color = "";
+            };
             video.src = videoUrl;
             player.classList.add("open");
             document.body.style.overflow = "hidden";
+            video.load();
             video.play().catch(() => {
-                // Some browsers require the viewer to press Play manually.
+                // The viewer can press Play if browser autoplay is blocked.
             });
         }
 
@@ -2014,9 +2026,15 @@
             document.body.style.overflow = "";
         }
 
-        // Load movies locally and TV show information from TVmaze.
-        displayContent(games);
-        loadMovies();
+        // Load local movies before the first catalogue render so they are never hidden
+        // while the external TV catalogue is loading.
+        movieCatalog = movieCatalogueData.slice();
+        moviesLoaded = true;
+        currentCategory = "All";
+        displayContent(allItems());
+        renderDiscoveryRows();
+
+        // TV listings are optional; their failure must not affect the movie catalogue.
         loadTVMazeShows();
 
         // ---------------- ACCOUNT AND PROFILE (BROWSER DEMO) ----------------
