@@ -1804,9 +1804,6 @@
                 const title = document.createElement("h3"); title.textContent = item.title;
                 const details = document.createElement("p"); details.textContent = `${item.type} | ${item.genre || "Genre unavailable"} | ${item.year || "Year unavailable"}`;
                 const buttons = document.createElement("div"); buttons.className = "card-buttons";
-                const detailsButton = document.createElement("button"); detailsButton.className = "small-btn"; detailsButton.textContent = "Details"; detailsButton.onclick = () => showDetails(item);
-                const favoriteButton = document.createElement("button"); favoriteButton.className = "small-btn favorite"; favoriteButton.textContent = isFavorite ? "♥ Saved" : "♡ Save"; favoriteButton.onclick = () => toggleFavorite(item.title);
-                buttons.append(detailsButton, favoriteButton);
                 if (item.videoUrl) {
                     const watchButton = document.createElement("button");
                     watchButton.className = "small-btn";
@@ -1814,10 +1811,14 @@
                     watchButton.onclick = () => openFreeMovie(item.title, item.videoUrl, item.credit);
                     buttons.appendChild(watchButton);
                 }
-                const officialActions = document.createElement("div"); officialActions.className = "official-actions";
-                const officialLink = document.createElement("a"); officialLink.className = "official-link"; officialLink.href = item.officialUrl || getOfficialFallback(item); officialLink.target = "_blank"; officialLink.rel = "noopener"; officialLink.textContent = item.type === "Game" ? "Official Game" : item.type === "TV Show" ? "Show Info" : "Movie Info";
-                const trailerLink = document.createElement("a"); trailerLink.className = "official-link youtube"; trailerLink.href = getYouTubeSearchUrl(item); trailerLink.target = "_blank"; trailerLink.rel = "noopener"; trailerLink.textContent = "▶ Trailer";
-                officialActions.append(officialLink, trailerLink); info.append(title, details, buttons, officialActions); card.append(poster, info); container.appendChild(card);
+                const trailerLink = document.createElement("a");
+                trailerLink.className = "official-link youtube";
+                trailerLink.href = getYouTubeSearchUrl(item);
+                trailerLink.target = "_blank";
+                trailerLink.rel = "noopener";
+                trailerLink.textContent = "▶ Trailer";
+                buttons.appendChild(trailerLink);
+                info.append(title, details, buttons); card.append(poster, info); container.appendChild(card);
             });
         }
 
