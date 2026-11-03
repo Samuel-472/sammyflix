@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>City Drive: Open World | SammyFlix</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#090d12;color:#fff;font-family:Arial,sans-serif}header{display:flex;justify-content:space-between;align-items:center;padding:14px 4%;background:#080808;border-bottom:1px solid #333}header a{color:#ff3944;text-decoration:none;font-weight:bold}.wrap{max-width:1100px;margin:auto;padding:18px}.top{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}.top h1{margin:8px 0;color:#ff3944}.stats{display:flex;gap:10px;flex-wrap:wrap}.stat{background:#1b2631;padding:9px 13px;border-radius:8px}.gamebox{position:relative;background:#111;border:1px solid #394653;border-radius:12px;overflow:hidden}canvas{display:block;width:100%;height:auto;touch-action:none}.hint{color:#b8c5d0;line-height:1.5}.controls{display:flex;justify-content:center;gap:10px;margin:12px auto;flex-wrap:wrap}.controls button,button{border:0;border-radius:8px;background:#e50914;color:white;padding:11px 17px;font-weight:bold;cursor:pointer}.controls button{min-width:54px;font-size:18px;touch-action:none}.message{min-height:24px;color:#9be7ad;font-weight:bold}.help{background:#151d26;padding:13px;border-radius:9px;margin-top:12px}@media(max-width:600px){.wrap{padding:10px}.stat{font-size:13px}}
+</style>
+</head>
+<body>
+<header><strong>SammyFlix · Online Arcade</strong><a href="index.html">← Back to SammyFlix</a></header>
+<main class="wrap">
+<div class="top"><div><h1>City Drive: Open World</h1><p class="hint">Explore a city, collect checkpoints and complete delivery challenges. No downloads needed.</p></div><div class="stats"><div class="stat">Score: <b id="score">0</b></div><div class="stat">Deliveries: <b id="deliveries">0</b>/5</div><div class="stat">Speed: <b id="speed">0</b></div></div></div>
+<div class="gamebox"><canvas id="game" width="960" height="600" aria-label="Top-down city driving game"></canvas></div>
+<div class="message" id="message">Find the glowing green checkpoint to begin your first delivery.</div>
+<div class="controls"><button data-key="ArrowLeft">◀</button><button data-key="ArrowUp">▲</button><button data-key="ArrowDown">▼</button><button data-key="ArrowRight">▶</button><button id="restart">Restart</button></div>
+<div class="help"><b>How to play</b><p class="hint">Use W / A / S / D or the arrow keys to steer and drive. On a phone or tablet, use the buttons. Drive to the green checkpoint, then reach the blue destination. Complete five deliveries and explore the city!</p></div>
+</main>
+<script>
+const canvas=document.getElementById('game'),ctx=canvas.getContext('2d');
+const W=canvas.width,H=canvas.height,keys={};
+let car={x:W/2,y:H/2,angle:-Math.PI/2,speed:0},score=0,deliveries=0,stage=0,target={x:170,y:150},destination={x:790,y:450};
+const roads=[{x:0,y:95,w:W,h:76},{x:0,y:270,w:W,h:78},{x:0,y:455,w:W,h:76},{x:115,y:0,w:75,h:H},{x:440,y:0,w:78,h:H},{x:760,y:0,w:75,h:H}];
+const blocks=[{x:18,y:18,w:85,h:65},{x:205,y:18,w:220,h:65},{x:535,y:18,w:210,h:65},{x:850,y:18,w:92,h:65},{x:18,y:190,w:85,h:65},{x:205,y:190,w:220,h:65},{x:535,y:190,w:210,h:65},{x:850,y:190,w:92,h:65},{x:18,y:370,w:85,h:70},{x:205,y:370,w:220,h:70},{x:535,y:370,w:210,h:70},{x:850,y:370,w:92,h:70},{x:18,y:545,w:85,h:40},{x:205,y:545,w:220,h:40},{x:535,y:545,w:210,h:40},{x:850,y:545,w:92,h:40}];
+function setMessage(t){document.getElementById('message').textContent=t}
+function reset(){car={x:480,y:390,angle:-Math.PI/2,speed:0};score=0;deliveries=0;stage=0;target={x:150,y:130};destination={x:800,y:490};updateStats();setMessage('Find the glowing green checkpoint to begin your first delivery.')}
+function updateStats(){document.getElementById('score').textContent=score;document.getElementById('deliveries').textContent=deliveries;document.getElementById('speed').textContent=Math.round(Math.abs(car.speed)*12)}
+function drawCity(){
+ ctx.fillStyle='#263b31';ctx.fillRect(0,0,W,H);
+ for(let x=0;x<W;x+=48)for(let y=0;y<H;y+=48){ctx.fillStyle=((x+y)/48)%2?'#294332':'#2b4735';ctx.fillRect(x,y,46,46)}
+ ctx.fillStyle='#343a40';roads.forEach(r=>ctx.fillRect(r.x,r.y,r.w,r.h));
+ ctx.strokeStyle='#c8b977';ctx.lineWidth=3;ctx.setLineDash([18,18]);roads.forEach(r=>{if(r.w>r.h){ctx.beginPath();ctx.moveTo(0,r.y+r.h/2);ctx.lineTo(W,r.y+r.h/2);ctx.stroke()}else{ctx.beginPath();ctx.moveTo(r.x+r.w/2,0);ctx.lineTo(r.x+r.w/2,H);ctx.stroke()}});ctx.setLineDash([]);
+ blocks.forEach((b,i)=>{ctx.fillStyle=i%2?'#53636b':'#68766f';ctx.fillRect(b.x,b.y,b.w,b.h);ctx.fillStyle='#8fa4a0';ctx.fillRect(b.x+9,b.y+9,b.w-18,7);ctx.fillStyle='#40515a';for(let xx=b.x+12;xx<b.x+b.w-8;xx+=25)for(let yy=b.y+25;yy<b.y+b.h-8;yy+=22)ctx.fillRect(xx,yy,10,8)});
+}
+function marker(p,color,label){ctx.beginPath();ctx.arc(p.x,p.y,18+Math.sin(Date.now()/180)*3,0,Math.PI*2);ctx.fillStyle=color;ctx.globalAlpha=.3;ctx.fill();ctx.globalAlpha=1;ctx.beginPath();ctx.arc(p.x,p.y,8,0,Math.PI*2);ctx.fillStyle=color;ctx.fill();ctx.fillStyle='#fff';ctx.font='bold 12px Arial';ctx.textAlign='center';ctx.fillText(label,p.x,p.y-25)}
+function drawCar(){ctx.save();ctx.translate(car.x,car.y);ctx.rotate(car.angle);ctx.fillStyle='#111';ctx.fillRect(-17,-11,34,22);ctx.fillStyle='#ef3340';ctx.fillRect(-15,-9,30,18);ctx.fillStyle='#a9d9ed';ctx.fillRect(-5,-8,11,16);ctx.fillStyle='#ffe69a';ctx.fillRect(12,-7,4,5);ctx.fillRect(12,2,4,5);ctx.restore()}
+function update(){
+ if(keys.ArrowUp||keys.KeyW)car.speed=Math.min(car.speed+.12,4.3);
+ else if(keys.ArrowDown||keys.KeyS)car.speed=Math.max(car.speed-.14,-2.2);
+ else car.speed*=.975;
+ if(Math.abs(car.speed)>.15){let turn=(keys.ArrowLeft||keys.KeyA?-1:0)+(keys.ArrowRight||keys.KeyD?1:0);car.angle+=turn*.045*Math.sign(car.speed)}
+ const nx=car.x+Math.cos(car.angle)*car.speed,ny=car.y+Math.sin(car.angle)*car.speed;
+ const hit=blocks.some(b=>nx+13>b.x&&nx-13<b.x+b.w&&ny+10>b.y&&ny-10<b.y+b.h);
+ if(!hit){car.x=Math.max(14,Math.min(W-14,nx));car.y=Math.max(14,Math.min(H-14,ny))}else car.speed*=-.28;
+ if(Math.hypot(car.x-target.x,car.y-target.y)<28&&stage===0){stage=1;setMessage('Checkpoint reached! Now drive to the blue delivery destination.')}
+ if(Math.hypot(car.x-destination.x,car.y-destination.y)<30&&stage===1){deliveries++;score+=100;stage=0;target={x:[150,480,800,150,800][deliveries%5],y:[130,130,310,490,130][deliveries%5]};destination={x:[800,150,150,800,480][deliveries%5],y:[490,490,130,310,490][deliveries%5]};setMessage(deliveries>=5?'Excellent! You completed all five deliveries. Keep exploring or restart for a new run.':'Delivery complete! +100 points. Find the next green checkpoint.')}
+ updateStats();
+}
+function render(){drawCity();marker(target,'#43f58b','PICKUP');if(stage===1)marker(destination,'#48c8ff','DROP');drawCar()}
+function loop(){update();render();requestAnimationFrame(loop)}
+window.addEventListener('keydown',e=>{if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight',' '].includes(e.key))e.preventDefault();keys[e.code]=true});
+window.addEventListener('keyup',e=>keys[e.code]=false);
+document.querySelectorAll('[data-key]').forEach(b=>{const k=b.dataset.key,code={ArrowUp:'ArrowUp',ArrowDown:'ArrowDown',ArrowLeft:'ArrowLeft',ArrowRight:'ArrowRight'}[k];b.addEventListener('pointerdown',e=>{e.preventDefault();keys[code]=true});['pointerup','pointerleave','pointercancel'].forEach(ev=>b.addEventListener(ev,()=>keys[code]=false))});
+document.getElementById('restart').addEventListener('click',reset);reset();loop();
+</script>
+</body>
+</html>
