@@ -1,0 +1,1689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='13' fill='%23080808'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-family='Arial,sans-serif' font-size='27' font-weight='900' letter-spacing='-2' fill='%23e50914'%3ESF%3C/text%3E%3C/svg%3E">
+    <title>SammyFlix - Movies, TV Shows & Browser Games</title>
+    <link rel="canonical" href="https://samuel-472.github.io/sammyflix/">
+    <meta property="og:url" content="https://samuel-472.github.io/sammyflix/">
+    <meta name="description" content="Discover movies, TV shows and browser games on SammyFlix. Explore entertainment, save favourites and play free mini-games online.">
+    <meta name="keywords" content="SammyFlix, movies, TV shows, browser games, free online games, entertainment discovery">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="author" content="SammyFlix">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="SammyFlix - Movies, TV Shows & Browser Games">
+    <meta property="og:description" content="Discover entertainment and play free browser mini-games on SammyFlix.">
+    <meta property="og:site_name" content="SammyFlix">
+    <meta name="twitter:card" content="summary">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "SammyFlix",
+      "description": "Discover movies, TV shows and free browser mini-games.",
+      "inLanguage": "en",
+      "url": "https://samuel-472.github.io/sammyflix/"
+    }
+    </script>
+
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #101010;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background: #080808;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            color: #e50914;
+            font-size: 29px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        .logo b {
+            color: #fff;
+            margin-left: 3px;
+        }
+
+        .hero-tag {
+            color: #ff3944;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            margin-bottom: 13px;
+        }
+
+        .hero h1 {
+            max-width: 620px;
+            line-height: 1.08;
+            text-transform: uppercase;
+            text-shadow: 0 3px 18px #000;
+        }
+
+        .hero p:not(.hero-tag) {
+            max-width: 500px;
+            font-size: 17px;
+        }
+
+        nav {
+            display: flex;
+            gap: 22px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        nav a:hover {
+            color: #e50914;
+        }
+
+        .search {
+            padding: 10px;
+            border: 1px solid #555;
+            border-radius: 5px;
+            background: #222;
+            color: white;
+            width: 190px;
+        }
+
+        .hero {
+            min-height: 430px;
+            padding: 100px 6%;
+            background:
+                linear-gradient(90deg, #080808 10%, rgba(0,0,0,.75) 55%, transparent),
+                linear-gradient(0deg, #101010, transparent),
+                url("https://images.unsplash.com/photo-1489599849927-2ee91cede3ba")
+                center/cover;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-content {
+            max-width: 550px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            line-height: 1.7;
+            color: #ddd;
+            margin-bottom: 22px;
+        }
+
+        .btn {
+            padding: 12px 23px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .primary {
+            background: #e50914;
+            color: white;
+        }
+
+        .secondary {
+            background: #555;
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: .8;
+        }
+
+        .section {
+            padding: 25px 5%;
+        }
+
+        .section h2 {
+            margin-bottom: 18px;
+            font-size: 23px;
+        }
+
+        .categories {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .category {
+            padding: 9px 17px;
+            background: #292929;
+            color: white;
+            border: 1px solid #444;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .category.active,
+        .category:hover {
+            background: #e50914;
+            border-color: #e50914;
+        }
+
+        .movies {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(165px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: #1d1d1d;
+            border-radius: 7px;
+            overflow: hidden;
+            transition: .3s;
+        }
+
+        .card:hover {
+            transform: scale(1.04);
+        }
+
+        .poster {
+            height: 225px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 15px;
+            font-size: 23px;
+            font-weight: bold;
+            text-shadow: 2px 2px 5px black;
+            background: linear-gradient(145deg, #571515, #101010);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .poster img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .poster::after {
+            content: "";
+            position: absolute;
+            inset: 35% 0 0;
+            background: linear-gradient(transparent, rgba(0,0,0,.88));
+            pointer-events: none;
+        }
+
+        .poster span {
+            position: relative;
+            z-index: 1;
+            align-self: flex-end;
+        }
+
+        .poster.has-image span {
+            display: block;
+        }
+
+        .poster.has-image::after {
+            z-index: 1;
+        }
+
+        .poster.has-image {
+            padding: 0;
+        }
+
+
+        .card:nth-child(3n+2) .poster {
+            background: linear-gradient(145deg, #143e64, #101010);
+        }
+
+        .card:nth-child(3n) .poster {
+            background: linear-gradient(145deg, #49306b, #101010);
+        }
+
+        .card-info {
+            padding: 12px;
+        }
+
+        .card-info h3 {
+            font-size: 16px;
+            margin-bottom: 7px;
+        }
+
+        .card-info p {
+            font-size: 12px;
+            color: #aaa;
+            margin-bottom: 12px;
+        }
+
+        .card-buttons {
+            display: flex;
+            gap: 6px;
+        }
+
+        .small-btn {
+            flex: 1;
+            padding: 8px 5px;
+            border: none;
+            border-radius: 3px;
+            color: white;
+            background: #e50914;
+            cursor: pointer;
+            font-size: 11px;
+        }
+
+        .small-btn.favorite {
+            background: #444;
+        }
+
+        .empty {
+            color: #aaa;
+            padding: 25px 0;
+            grid-column: 1 / -1;
+        }
+
+        .details-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 500;
+            background: rgba(0,0,0,.82);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .details-modal.open {
+            display: flex;
+        }
+
+        .details-box {
+            background: #202020;
+            border: 1px solid #444;
+            border-radius: 10px;
+            width: min(520px, 100%);
+            padding: 25px;
+            box-shadow: 0 15px 50px rgba(0,0,0,.6);
+        }
+
+        .details-box h2 {
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .details-box p {
+            color: #ccc;
+            line-height: 1.6;
+            margin: 10px 0 18px;
+        }
+
+        .close-modal {
+            float: right;
+            border: 0;
+            background: transparent;
+            color: #fff;
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+        footer {
+            background: #080808;
+            padding: 35px 5%;
+            text-align: center;
+            color: #888;
+            margin-top: 35px;
+        }
+
+        footer h2 {
+            color: #e50914;
+            margin-bottom: 10px;
+        }
+
+        @media(max-width: 700px) {
+            header {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            nav {
+                order: 3;
+                width: 100%;
+                overflow-x: auto;
+            }
+
+            .search {
+                width: 150px;
+            }
+
+            .sammyflix-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+            .hero {
+                min-height: 370px;
+                padding: 65px 6%;
+            }
+
+            .hero h1 {
+                font-size: 35px;
+            }
+
+            .hero-tag {
+                letter-spacing: 2px;
+            }
+
+            .movies {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .poster {
+                height: 190px;
+            }
+        }
+    
+        .sammyflix-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 46px;
+            height: 46px;
+            flex: 0 0 auto;
+            transition: transform .2s ease, filter .2s ease;
+        }
+
+        .sammyflix-icon svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .sammyflix-icon:hover {
+            transform: scale(1.08);
+            filter: drop-shadow(0 0 9px rgba(229, 9, 20, .55));
+        }
+
+        .official-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .official-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            min-width: 0;
+            padding: 9px 6px;
+            border-radius: 5px;
+            background: #303030;
+            color: #fff;
+            text-decoration: none;
+            text-align: center;
+            font-size: 11px;
+            font-weight: 700;
+            transition: background .2s ease, transform .2s ease;
+        }
+
+        .official-link:hover {
+            background: #e50914;
+            transform: translateY(-1px);
+        }
+
+        .official-link.youtube {
+            background: #b90024;
+        }
+
+        .official-link.youtube:hover {
+            background: #ff0033;
+        }
+
+        /* SAMMYFLIX PREMIUM VISUAL STYLE */
+        :root {
+            --sf-red: #e50914;
+            --sf-red-dark: #b20710;
+            --sf-panel: #181818;
+            --sf-muted: #b8b8b8;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background:
+                radial-gradient(ellipse at 15% 0%, rgba(229, 9, 20, .12), transparent 32%),
+                #090909;
+            color: #fff;
+            letter-spacing: .1px;
+        }
+
+        header {
+            background: rgba(8, 8, 8, .94);
+            border-bottom: 1px solid rgba(255, 255, 255, .07);
+            backdrop-filter: blur(14px);
+            padding-top: 17px;
+            padding-bottom: 17px;
+        }
+
+        .logo {
+            font-size: 30px;
+            letter-spacing: 1.8px;
+            text-shadow: 0 0 22px rgba(229, 9, 20, .35);
+        }
+
+        nav a {
+            font-weight: 600;
+            transition: color .2s ease;
+        }
+
+        nav a:hover {
+            color: #ff3943;
+        }
+
+        .search {
+            border: 1px solid #454545;
+            border-radius: 24px;
+            padding: 11px 16px;
+            transition: border-color .2s, box-shadow .2s;
+        }
+
+        .search:focus {
+            outline: none;
+            border-color: var(--sf-red);
+            box-shadow: 0 0 0 3px rgba(229, 9, 20, .17);
+        }
+
+        .hero {
+            min-height: 500px;
+            position: relative;
+            background:
+                linear-gradient(90deg, #090909 4%, rgba(9,9,9,.82) 44%, rgba(9,9,9,.15) 100%),
+                linear-gradient(0deg, #090909 0%, transparent 45%),
+                url("https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1800&q=85")
+                center/cover;
+        }
+
+        .hero-content {
+            animation: sfFadeUp .8s ease both;
+        }
+
+        .hero h1 {
+            font-size: clamp(38px, 5vw, 64px);
+            line-height: 1.05;
+            letter-spacing: -1.8px;
+            text-shadow: 0 5px 25px rgba(0,0,0,.6);
+        }
+
+        .hero p {
+            max-width: 510px;
+            font-size: 16px;
+            color: #e2e2e2;
+        }
+
+        .btn {
+            border-radius: 7px;
+            padding: 13px 25px;
+            transition: transform .2s, background .2s, box-shadow .2s;
+        }
+
+        .btn:hover {
+            opacity: 1;
+            transform: translateY(-2px);
+        }
+
+        .primary {
+            background: linear-gradient(135deg, #ff2632, #b20710);
+            box-shadow: 0 7px 22px rgba(229, 9, 20, .22);
+        }
+
+        .secondary {
+            background: rgba(90,90,90,.88);
+        }
+
+        .section {
+            padding-top: 32px;
+            padding-bottom: 32px;
+        }
+
+        .section h2 {
+            font-size: 26px;
+            letter-spacing: -.5px;
+        }
+
+        .category {
+            border-radius: 22px;
+            padding: 10px 19px;
+            font-weight: 600;
+            transition: .2s ease;
+        }
+
+        .category:hover,
+        .category.active {
+            background: var(--sf-red);
+            border-color: var(--sf-red);
+            box-shadow: 0 5px 16px rgba(229, 9, 20, .2);
+        }
+
+        .movies {
+            gap: 22px;
+        }
+
+        .card {
+            background: linear-gradient(180deg, #202020, #141414);
+            border: 1px solid rgba(255,255,255,.06);
+            border-radius: 10px;
+            box-shadow: 0 8px 24px rgba(0,0,0,.22);
+            transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-7px) scale(1.015);
+            border-color: rgba(229,9,20,.55);
+            box-shadow: 0 15px 34px rgba(0,0,0,.4);
+        }
+
+        .poster {
+            height: 245px;
+            background: linear-gradient(145deg, #7b1018, #151515 75%);
+        }
+
+        .card-info {
+            padding: 14px;
+        }
+
+        .card-info h3 {
+            font-size: 16px;
+            line-height: 1.35;
+        }
+
+        .card-info p {
+            color: var(--sf-muted);
+            line-height: 1.5;
+        }
+
+        .small-btn {
+            border-radius: 5px;
+            padding: 9px 6px;
+            font-weight: 700;
+            transition: background .2s, transform .2s;
+        }
+
+        .small-btn:hover {
+            background: #ff2632;
+            transform: translateY(-1px);
+        }
+
+        .small-btn.favorite {
+            background: #383838;
+        }
+
+        .small-btn.favorite:hover {
+            background: #555;
+        }
+
+        footer {
+            border-top: 1px solid rgba(255,255,255,.08);
+            background: #060606;
+            line-height: 1.8;
+        }
+
+        footer h2 {
+            letter-spacing: 2px;
+        }
+
+        @keyframes sfFadeUp {
+            from { opacity: 0; transform: translateY(18px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 700px) {
+            header {
+                padding-left: 4%;
+                padding-right: 4%;
+            }
+
+            .hero {
+                min-height: 390px;
+                background-position: 58% center;
+            }
+
+            .hero h1 {
+                letter-spacing: -1px;
+            }
+
+            .poster {
+                height: 205px;
+            }
+
+            .section h2 {
+                font-size: 22px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                scroll-behavior: auto !important;
+                animation-duration: .01ms !important;
+                transition-duration: .01ms !important;
+            }
+        }
+
+
+        .account-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #ddd;
+            font-size: 13px;
+        }
+
+        .account-btn {
+            border: 1px solid #e50914;
+            background: transparent;
+            color: white;
+            border-radius: 5px;
+            padding: 9px 12px;
+            cursor: pointer;
+        }
+
+        .account-btn:hover,
+        .account-btn.active {
+            background: #e50914;
+        }
+
+        .account-box {
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .account-note,
+        .account-warning {
+            font-size: 13px;
+            color: #aaa;
+        }
+
+        .account-warning {
+            border-top: 1px solid #444;
+            padding-top: 12px;
+            margin-top: 18px !important;
+        }
+
+        .account-tabs {
+            display: flex;
+            gap: 8px;
+            margin: 15px 0;
+        }
+
+        .account-box label {
+            display: block;
+            margin: 12px 0 6px;
+            color: #ddd;
+            font-size: 13px;
+        }
+
+        .account-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #555;
+            border-radius: 5px;
+            background: #111;
+            color: white;
+        }
+
+        .account-submit {
+            width: 100%;
+            margin: 16px 0 0;
+        }
+
+        .account-message {
+            color: #ff727a;
+            min-height: 18px;
+            font-size: 13px;
+            margin-top: 10px;
+        }
+
+        .profile-avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            background: #e50914;
+            color: white;
+            font-size: 30px;
+            font-weight: bold;
+            margin: 18px auto;
+        }
+
+        .profile-name {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .profile-email {
+            text-align: center;
+            color: #aaa;
+            font-size: 13px;
+        }
+
+        @media(max-width: 700px) {
+            .account-controls {
+                order: 4;
+                width: 100%;
+            }
+        }
+
+
+        /* SAMMYFLIX UPGRADE: filters, discovery rows, notifications and themes */
+        .upgrade-toolbar { display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin: 0 0 20px; }
+        .filter-control { background:#202020; color:#fff; border:1px solid #484848; border-radius:7px; padding:10px 12px; min-width:135px; }
+        .filter-label { color:#bbb; font-size:12px; display:flex; flex-direction:column; gap:6px; }
+        .upgrade-btn { background:#292929; color:#fff; border:1px solid #4b4b4b; border-radius:7px; padding:10px 13px; cursor:pointer; }
+        .upgrade-btn:hover { border-color:#e50914; background:#351619; }
+        .discovery-row { margin: 25px 0 30px; }
+        .discovery-row h2 { margin-bottom:13px; }
+        .discovery-list { display:flex; gap:12px; overflow-x:auto; padding:4px 3px 14px; }
+        .discovery-item { flex:0 0 175px; min-height:85px; background:#1c1c1c; border:1px solid #333; border-radius:8px; padding:13px; cursor:pointer; }
+        .discovery-item:hover { border-color:#e50914; transform:translateY(-2px); }
+        .discovery-item strong { display:block; margin-bottom:7px; }
+        .discovery-item small { color:#aaa; }
+        .notification-wrap { position:relative; }
+        .notification-panel { display:none; position:absolute; right:0; top:45px; width:min(320px, 85vw); max-height:330px; overflow:auto; padding:14px; background:#191919; border:1px solid #444; border-radius:9px; box-shadow:0 12px 35px #0009; z-index:300; }
+        .notification-panel.open { display:block; }
+        .notification-item { padding:10px 2px; border-bottom:1px solid #333; color:#ddd; font-size:13px; line-height:1.5; }
+        .notification-count { display:inline-grid; place-items:center; min-width:18px; height:18px; margin-left:4px; border-radius:50%; background:#e50914; color:white; font-size:11px; }
+        body.light-theme { background:#f2f2f2; color:#171717; }
+        body.light-theme header, body.light-theme footer { background:#fff; color:#171717; border-color:#ddd; }
+        body.light-theme nav a, body.light-theme .logo b { color:#171717; }
+        body.light-theme .section h2, body.light-theme .hero h1 { color:#fff; }
+        body.light-theme .card, body.light-theme .discovery-item { background:#fff; color:#171717; border-color:#ddd; }
+        body.light-theme .card-info p, body.light-theme .discovery-item small { color:#555; }
+        body.light-theme .filter-control, body.light-theme .upgrade-btn { background:#fff; color:#171717; border-color:#ccc; }
+        body.light-theme .notification-panel { background:#fff; color:#171717; border-color:#ccc; }
+        body.light-theme .notification-item { color:#333; border-color:#ddd; }
+        body.light-theme .search { background:#fff; color:#171717; border-color:#ccc; }
+        @media(max-width:700px) { .upgrade-toolbar { align-items:stretch; } .filter-label { flex:1 1 42%; } .filter-control { width:100%; min-width:0; } .notification-panel { right:-50px; } }
+
+
+        /* SammyFlix browser arcade */
+        .arcade-section { display:none; padding:35px 6% 55px; }
+        .arcade-section.active { display:block; }
+        .arcade-intro { color:#bbb; margin:10px 0 22px; line-height:1.6; }
+        .arcade-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px; }
+        .arcade-card { background:#1b1b1b; border:1px solid #333; border-radius:12px; padding:20px; }
+        .arcade-card h3 { margin-bottom:8px; color:#fff; }
+        .arcade-card p { color:#bbb; min-height:44px; line-height:1.5; font-size:14px; }
+        .arcade-card button, .game-panel button { margin-top:12px; padding:10px 15px; border:0; border-radius:6px; background:#e50914; color:#fff; cursor:pointer; font-weight:bold; }
+        .game-panel { display:none; margin-top:22px; padding:22px; background:#181818; border:1px solid #444; border-radius:12px; text-align:center; }
+        .game-panel.active { display:block; }
+        .game-status { margin:12px 0; color:#f3f3f3; min-height:24px; }
+        .ttt-board { display:grid; grid-template-columns:repeat(3, minmax(70px,90px)); gap:7px; justify-content:center; margin:18px auto; }
+        .ttt-cell { width:90px; height:82px; margin:0!important; font-size:30px; background:#292929!important; border:1px solid #555!important; }
+        .memory-board { display:grid; grid-template-columns:repeat(4, minmax(55px,75px)); gap:8px; justify-content:center; margin:18px auto; }
+        .memory-card { width:75px; height:75px; margin:0!important; font-size:27px; background:#292929!important; border:1px solid #555!important; }
+        .guess-input { width:100px; padding:10px; border-radius:6px; border:1px solid #777; background:#222; color:#fff; }
+        body.light-theme .arcade-card, body.light-theme .game-panel { background:#fff; color:#171717; border-color:#ccc; }
+        body.light-theme .arcade-card h3, body.light-theme .game-status { color:#171717; }
+        body.light-theme .arcade-card p, body.light-theme .arcade-intro { color:#555; }
+        @media(max-width:600px){ .ttt-cell{width:72px;height:72px}.memory-card{width:60px;height:60px} }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Website Header -->
+    <header>
+        <div class="logo"><span>SAMMY</span><b>FLIX</b></div>
+
+        <nav>
+            <a onclick="showCategory('All')">Home</a>
+            <a onclick="showCategory('Movie')">Movies</a>
+            <a onclick="showCategory('TV Show')">TV Shows</a>
+            <a onclick="showCategory('Game')">Games</a>
+            <a onclick="showArcade()">Play Online</a>
+            <a onclick="showFavorites()">My List</a>
+        </nav>
+
+        <a class="sammyflix-icon"
+           href="#"
+           onclick="showCategory('All'); return false;"
+           aria-label="SammyFlix home"
+           title="SammyFlix Home">
+            <svg viewBox="0 0 48 48" aria-hidden="true">
+                <rect x="1" y="1" width="46" height="46" rx="12" fill="#171717" stroke="#e50914" stroke-width="2"/>
+                <path d="M31.5 13.5H19.2c-4.2 0-6.7 2.2-6.7 5.8 0 3.2 2 4.7 5.8 5.6l6.2 1.4c1.6.4 2.3.9 2.3 1.9 0 1.1-1 1.8-2.8 1.8H12.5v6h12.8c5.1 0 8.1-2.5 8.1-6.4 0-3.4-2.1-5.2-6.2-6.1l-6-1.3c-1.5-.3-2.1-.8-2.1-1.7 0-1 .9-1.6 2.5-1.6h9.9z" fill="#e50914"/>
+                <path d="M35.5 13.5v22h-6.2v-22z" fill="#ffffff"/>
+            </svg>
+        </a>
+        <div class="account-controls">
+            <span id="accountGreeting">Guest</span>
+            <button class="account-btn" id="accountAction" onclick="openAccountModal()">Sign In</button>
+            <button class="account-btn profile-btn" id="profileAction" onclick="openProfileModal()" hidden>Profile</button>
+        </div>
+        <button class="upgrade-btn" id="themeToggle" onclick="toggleTheme()" title="Switch theme" aria-label="Switch theme">☀ Light</button>
+        <div class="notification-wrap">
+            <button class="upgrade-btn" onclick="toggleNotifications()" aria-label="Notifications">♢ Notifications <span id="notificationCount" class="notification-count">0</span></button>
+            <div class="notification-panel" id="notificationPanel"><strong>Notifications</strong><div id="notificationList"></div><button class="upgrade-btn" onclick="clearNotifications()" style="margin-top:10px;width:100%;">Clear notifications</button></div>
+        </div>
+        <input
+            type="text"
+            class="search"
+            id="search"
+            placeholder="Search entertainment..."
+            oninput="searchContent()"
+        >
+    </header>
+
+    <!-- Featured Banner -->
+    <section class="hero">
+        <div class="hero-content">
+            <p class="hero-tag">WELCOME TO SAMMYFLIX</p>
+            <h1>YOUR ENTERTAINMENT STARTS HERE</h1>
+
+            <p>
+                Explore movies, discover TV shows and find your next favorite game.
+                All your entertainment discoveries in one place.
+            </p>
+
+            <button class="btn primary"
+                onclick="showCategory('All')">
+                Explore Now
+            </button>
+
+            <button class="btn secondary"
+                onclick="showFavorites()">
+                My List
+            </button>
+        </div>
+    </section>
+
+    <!-- Entertainment Section -->
+    <section class="section">
+
+        <h2 id="sectionTitle">Explore Entertainment</h2>
+
+        <div class="categories">
+            <button class="category active"
+                onclick="showCategory('All', this)">
+                All
+            </button>
+
+            <button class="category"
+                onclick="showCategory('Movie', this)">
+                Movies
+            </button>
+
+            <button class="category"
+                onclick="showCategory('TV Show', this)">
+                TV Shows
+            </button>
+
+            <button class="category"
+                onclick="showCategory('Game', this)">
+                Games
+            </button>
+
+            <button class="category"
+                onclick="showCategory('Action', this)">
+                Action
+            </button>
+
+            <button class="category"
+                onclick="showCategory('Comedy', this)">
+                Comedy
+            </button>
+
+            <button class="category"
+                onclick="showCategory('Adventure', this)">
+                Adventure
+            </button>
+        </div>
+
+        <div class="upgrade-toolbar" aria-label="Advanced entertainment filters">
+            <label class="filter-label">Type
+                <select id="typeFilter" class="filter-control" onchange="applyFilters()"><option value="All">All types</option><option value="Movie">Movies</option><option value="TV Show">TV Shows</option><option value="Game">Games</option></select>
+            </label>
+            <label class="filter-label">Genre
+                <select id="genreFilter" class="filter-control" onchange="applyFilters()"><option value="All">All genres</option><option>Action</option><option>Adventure</option><option>Comedy</option><option>Drama</option><option>Fantasy</option><option>Horror</option><option>Racing</option><option>Sports</option><option>Science-Fiction</option></select>
+            </label>
+            <label class="filter-label">Release year
+                <select id="yearFilter" class="filter-control" onchange="applyFilters()"><option value="All">Any year</option><option value="2020">2020–2026</option><option value="2010">2010–2019</option><option value="2000">2000–2009</option><option value="1900">Before 2000</option></select>
+            </label>
+            <label class="filter-label">Sort by
+                <select id="sortFilter" class="filter-control" onchange="applyFilters()"><option value="popular">Recommended</option><option value="title-asc">Title A–Z</option><option value="title-desc">Title Z–A</option><option value="year-desc">Newest first</option><option value="year-asc">Oldest first</option></select>
+            </label>
+            <button class="upgrade-btn" onclick="resetFilters()">Reset filters</button>
+        </div>
+
+        <div class="discovery-row" id="trendingSection"><h2>🔥 Trending Top 10</h2><div class="discovery-list" id="trendingList"></div></div>
+        <div class="discovery-row" id="recentSection"><h2>🕘 Recently Viewed</h2><div class="discovery-list" id="recentList"><p class="empty">Titles you open will appear here.</p></div></div>
+
+        <p id="catalogueStatus" style="color:#aaa;font-size:13px;margin:-10px 0 18px;">Loading entertainment catalogue...</p>
+        <div class="movies" id="contentList"></div>
+
+    </section>
+
+    <!-- Details window -->
+    <div class="details-modal" id="detailsModal" onclick="closeDetails(event)">
+        <div class="details-box">
+            <button class="close-modal" onclick="closeDetails()" aria-label="Close">&times;</button>
+            <h2 id="modalTitle">Title</h2>
+            <p id="modalMeta"></p>
+            <p id="modalSummary"></p>
+            <button class="btn primary" id="modalFindButton">Find to Watch</button>
+        </div>
+    </div>
+
+
+    <!-- Sign in and registration window -->
+    <div class="details-modal" id="accountModal">
+        <div class="details-box account-box">
+            <button class="close-modal" onclick="closeAccountModal()" aria-label="Close">&times;</button>
+            <h2 id="accountModalTitle">Welcome to SammyFlix</h2>
+            <p class="account-note">Create a demo account or sign in to see your own profile and saved list.</p>
+            <div class="account-tabs">
+                <button class="account-btn active" id="loginTab" onclick="setAccountMode('login')">Sign In</button>
+                <button class="account-btn" id="registerTab" onclick="setAccountMode('register')">Create Account</button>
+            </div>
+            <form id="accountForm" onsubmit="submitAccount(event)">
+                <label for="accountName" id="nameLabel" hidden>Full name</label>
+                <input id="accountName" class="account-input" type="text" placeholder="Your name" autocomplete="name" hidden>
+                <label for="accountEmail">Email</label>
+                <input id="accountEmail" class="account-input" type="email" placeholder="you@example.com" autocomplete="email" required>
+                <label for="accountPassword">Password</label>
+                <input id="accountPassword" class="account-input" type="password" placeholder="Demo password" autocomplete="current-password" minlength="4" required>
+                <button class="btn primary account-submit" id="accountSubmit" type="submit">Sign In</button>
+                <p id="accountMessage" class="account-message" aria-live="polite"></p>
+            </form>
+            <p class="account-warning">Student demo only: account details are stored in this browser, not a secure online database. Do not use a real password or private information.</p>
+        </div>
+    </div>
+
+    <!-- User profile window -->
+    <div class="details-modal" id="profileModal">
+        <div class="details-box account-box">
+            <button class="close-modal" onclick="closeProfileModal()" aria-label="Close">&times;</button>
+            <h2>My Profile</h2>
+            <div class="profile-avatar" id="profileAvatar">S</div>
+            <p id="profileName" class="profile-name"></p>
+            <p id="profileEmail" class="profile-email"></p>
+            <p id="profileJoined" class="profile-email"></p>
+            <p id="profileSavedCount" class="profile-email"></p>
+            <button class="btn secondary account-submit" onclick="showFavorites(); closeProfileModal();">View My List</button>
+            <button class="btn primary account-submit" onclick="signOut()">Sign Out</button>
+        </div>
+    </div>
+
+
+    <!-- Playable SammyFlix browser arcade: original mini-games -->
+    <section class="arcade-section" id="arcadeSection">
+        <h2>🎮 SammyFlix Online Arcade</h2>
+        <p class="arcade-intro">Play these original mini-games directly in your browser. They are free, need no download and work on this page.</p>
+        <div class="arcade-grid">
+            <article class="arcade-card"><h3>⭕ Tic-Tac-Toe</h3><p>Play a classic two-player game. Take turns placing X and O.</p><button onclick="openMiniGame('ticTacToePanel')">Play Tic-Tac-Toe</button></article>
+            <article class="arcade-card"><h3>🧠 Memory Match</h3><p>Flip the cards and find all eight matching pairs.</p><button onclick="startMemoryGame()">Play Memory Match</button></article>
+            <article class="arcade-card"><h3>🔢 Number Guess</h3><p>Guess the secret number between 1 and 100 with hints.</p><button onclick="startGuessGame()">Play Number Guess</button></article>
+        </div>
+        <div class="game-panel" id="ticTacToePanel"><h3>Tic-Tac-Toe</h3><p class="game-status" id="tttStatus">X's turn</p><div class="ttt-board" id="tttBoard"></div><button onclick="resetTicTacToe()">Restart game</button><button onclick="closeMiniGames()">Close</button></div>
+        <div class="game-panel" id="memoryPanel"><h3>Memory Match</h3><p class="game-status" id="memoryStatus">Find all matching pairs.</p><div class="memory-board" id="memoryBoard"></div><button onclick="startMemoryGame()">Restart game</button><button onclick="closeMiniGames()">Close</button></div>
+        <div class="game-panel" id="guessPanel"><h3>Number Guess</h3><p class="game-status" id="guessStatus">I picked a number from 1 to 100.</p><input class="guess-input" id="guessInput" type="number" min="1" max="100" placeholder="1–100"><button onclick="submitGuess()">Guess</button><button onclick="startGuessGame()">New number</button><button onclick="closeMiniGames()">Close</button></div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <h2>SAMMYFLIX</h2>
+        <p>Movies | TV Shows | Games</p>
+        <p>Discover. Explore. Enjoy.</p>
+        <p>Movie catalogue: built-in sample list | TV show information: <a href="https://www.tvmaze.com/" target="_blank" rel="noopener" style="color:#aaa;">TVmaze</a>.</p>
+        <p>Version 4.0 | © 2026 SammyFlix. Student project.</p>
+    </footer>
+
+    <script>
+        // SammyFlix Version 2.0
+        // Movie information: SampleAPIs (public sample movie catalogue).
+        // TV show information: TVmaze public API.
+        // Games: curated sample catalogue with official publisher links.
+
+        const TVMAZE_BASE_URL = "https://api.tvmaze.com";
+
+        let movieCatalog = [];
+        let tvMazeShows = [];
+        let tvMazeLoaded = false;
+        let moviesLoaded = false;
+        let currentCategory = "All";
+        let searchText = "";
+        let favoritesOnly = false;
+        let requestNumber = 0;
+        let viewedTitles = JSON.parse(localStorage.getItem("sammyFlixRecentlyViewed") || "[]");
+        let notifications = JSON.parse(localStorage.getItem("sammyFlixNotifications") || "[]");
+
+        // Local movie catalogue: search works even if an external movie API is unavailable.
+        const movieCatalogueData = [
+            { title: "Avengers: Endgame", genre: "Action", year: 2019, summary: "The Avengers unite for a final mission to restore what was lost.", officialUrl: "https://www.marvel.com/movies/avengers-endgame" },
+            { title: "Spider-Man: No Way Home", genre: "Action", year: 2021, summary: "Peter Parker faces challenges after his identity becomes public.", officialUrl: "https://www.sonypictures.com/movies/spidermannowayhome" },
+            { title: "The Lion King", genre: "Adventure", year: 2019, summary: "A young lion learns about responsibility and his place in the circle of life.", officialUrl: "https://movies.disney.com/the-lion-king-2019" },
+            { title: "Jumanji: Welcome to the Jungle", genre: "Adventure", year: 2017, summary: "Four teenagers enter a mysterious video game world.", officialUrl: "https://www.sonypictures.com/movies/jumanjiwelcometothejungle" },
+            { title: "Black Panther", genre: "Action", year: 2018, summary: "A new king must protect Wakanda and its people.", officialUrl: "https://www.marvel.com/movies/black-panther" },
+            { title: "Inside Out", genre: "Comedy", year: 2015, summary: "A young girl's emotions help her navigate a major life change.", officialUrl: "https://movies.disney.com/inside-out" },
+            { title: "Finding Nemo", genre: "Adventure", year: 2003, summary: "A clownfish travels across the ocean to find his son.", officialUrl: "https://movies.disney.com/finding-nemo" },
+            { title: "The Incredibles", genre: "Action", year: 2004, summary: "A family of superheroes tries to live an ordinary life.", officialUrl: "https://www.pixar.com/the-incredibles" },
+            { title: "Jurassic World", genre: "Adventure", year: 2015, summary: "A dinosaur theme park faces an unexpected crisis.", officialUrl: "https://www.jurassicworld.com/" },
+            { title: "Coco", genre: "Adventure", year: 2017, summary: "A young musician discovers his family's history in a colourful world.", officialUrl: "https://movies.disney.com/coco" },
+            { title: "The Super Mario Bros. Movie", genre: "Comedy", year: 2023, summary: "Mario and Luigi enter a colourful world full of adventure.", officialUrl: "https://www.thesupermariobros.movie/" },
+            { title: "Avatar: The Way of Water", genre: "Adventure", year: 2022, summary: "The Sully family explores the oceans of Pandora.", officialUrl: "https://www.avatar.com/movies/avatar-the-way-of-water" }
+        ].map(movie => ({ ...movie, type: "Movie", image: "" }));
+
+        const games = [
+            {
+                title: "Grand Theft Auto V",
+                type: "Game",
+                genre: "Action",
+                year: 2013,
+                image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=500",
+                summary: "An open-world action adventure game from Rockstar Games.",
+                officialUrl: "https://www.rockstargames.com/gta-v"
+            },
+            {
+                title: "Minecraft",
+                type: "Game",
+                genre: "Adventure",
+                year: 2011,
+                image: "https://images.unsplash.com/photo-1607513746994-51f730a44832?w=500",
+                summary: "A creative sandbox game about building, exploring and surviving.",
+                officialUrl: "https://www.minecraft.net/en-us/about-minecraft"
+            },
+            {
+                title: "Forza Horizon 5",
+                type: "Game",
+                genre: "Racing",
+                year: 2021,
+                image: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=500",
+                summary: "An open-world racing game set in a colourful version of Mexico.",
+                officialUrl: "https://www.xbox.com/en-US/games/store/forza-horizon-5/9NNX1VVR3KNQ"
+            },
+            {
+                title: "EA SPORTS FC 25",
+                type: "Game",
+                genre: "Sports",
+                year: 2024,
+                image: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=500",
+                summary: "A football simulation game featuring clubs and competitions.",
+                officialUrl: "https://www.ea.com/games/ea-sports-fc/fc-25"
+            }
+        ];
+
+        let currentUser = null;
+        let favorites = [];
+        let accountMode = "login";
+
+        function loadUserFavorites() {
+            if (!currentUser) {
+                favorites = [];
+                return;
+            }
+            try {
+                const saved = JSON.parse(localStorage.getItem("sammyFlixFavorites_" + currentUser.email) || "[]");
+                favorites = Array.isArray(saved) ? saved : [];
+            } catch (error) {
+                favorites = [];
+            }
+        }
+
+        function saveUserFavorites() {
+            if (!currentUser) return;
+            localStorage.setItem("sammyFlixFavorites_" + currentUser.email, JSON.stringify(favorites));
+        }
+
+        function cleanText(value) {
+            const temporary = document.createElement("div");
+            temporary.innerHTML = value || "";
+            return (temporary.textContent || temporary.innerText || "")
+                .replace(/\s+/g, " ").trim();
+        }
+
+        function setStatus(message) {
+            const status = document.getElementById("catalogueStatus");
+            if (status) status.textContent = message;
+        }
+
+        function allItems() {
+            return [...movieCatalog, ...tvMazeShows, ...games];
+        }
+
+        // Load the built-in movie list. No broken third-party movie API is required.
+        async function loadMovies() {
+            movieCatalog = movieCatalogueData.slice();
+            moviesLoaded = true;
+            setStatus(`Loaded ${movieCatalog.length} movies, ${tvMazeShows.length} TV shows and ${games.length} games where available.`);
+            renderCurrentView();
+        }
+
+        function convertTVMazeShow(show) {
+            return {
+                title: show.name || "Untitled show",
+                type: "TV Show",
+                genre: show.genres && show.genres.length
+                    ? show.genres.slice(0, 2).join(", ")
+                    : "TV",
+                year: show.premiered ? show.premiered.substring(0, 4) : "Unknown",
+                image: show.image ? (show.image.medium || show.image.original) : "",
+                summary: cleanText(show.summary) || "No description available.",
+                officialUrl: show.url || "https://www.tvmaze.com/search?q=" + encodeURIComponent(show.name || "")
+            };
+        }
+
+        async function loadTVMazeShows() {
+            const thisRequest = ++requestNumber;
+            setStatus("Loading TV shows from TVmaze...");
+            try {
+                if (!tvMazeLoaded) {
+                    const response = await fetch(`${TVMAZE_BASE_URL}/shows?page=0`);
+                    if (!response.ok) throw new Error("TVmaze request failed");
+                    const shows = await response.json();
+                    tvMazeShows = shows.slice(0, 60).map(convertTVMazeShow);
+                    tvMazeLoaded = true;
+                }
+                if (thisRequest === requestNumber) {
+                    setStatus(`TVmaze catalogue loaded: ${tvMazeShows.length} shows.`);
+                    renderCurrentView();
+                }
+            } catch (error) {
+                console.error("TVmaze error:", error);
+                setStatus("TV shows could not load. Check your internet connection.");
+                renderCurrentView();
+            }
+        }
+
+        async function searchTVMazeShows(query) {
+            const thisRequest = ++requestNumber;
+            if (!query.trim()) {
+                renderCurrentView();
+                return;
+            }
+            setStatus("Searching TVmaze...");
+            try {
+                const response = await fetch(
+                    `${TVMAZE_BASE_URL}/search/shows?q=${encodeURIComponent(query)}`
+                );
+                if (!response.ok) throw new Error("TVmaze search failed");
+                const results = await response.json();
+                const found = results.map(result => convertTVMazeShow(result.show));
+                if (thisRequest === requestNumber) {
+                    setStatus(`${found.length} TV show search result(s).`);
+                    displayContent(found);
+                }
+            } catch (error) {
+                setStatus("TV show search failed. Check your internet connection.");
+                console.error(error);
+            }
+        }
+
+        function renderCurrentView() {
+            let items = allItems();
+
+            if (currentCategory === "Movie") {
+                items = movieCatalog;
+            } else if (currentCategory === "TV Show") {
+                items = tvMazeShows;
+            } else if (currentCategory === "Game") {
+                items = games;
+            }
+
+            displayContent(items);
+            renderDiscoveryRows();
+        }
+
+        function displayContent(items = allItems()) {
+            const container = document.getElementById("contentList");
+            const typeValue = document.getElementById("typeFilter")?.value || "All";
+            const genreValue = document.getElementById("genreFilter")?.value || "All";
+            const yearValue = document.getElementById("yearFilter")?.value || "All";
+            const sortValue = document.getElementById("sortFilter")?.value || "popular";
+            let results = items.filter(item => {
+                const genreText = (item.genre || "").toLowerCase();
+                const matchesCategory = currentCategory === "All" || item.type === currentCategory || genreText.includes(currentCategory.toLowerCase());
+                const matchesSearch = item.title.toLowerCase().includes(searchText) || genreText.includes(searchText) || (item.summary || "").toLowerCase().includes(searchText);
+                const matchesFavorite = !favoritesOnly || favorites.includes(item.title);
+                const matchesType = typeValue === "All" || item.type === typeValue;
+                const matchesGenre = genreValue === "All" || genreText.includes(genreValue.toLowerCase());
+                const year = Number.parseInt(item.year, 10);
+                const matchesYear = yearValue === "All" || (yearValue === "2020" ? year >= 2020 : yearValue === "2010" ? year >= 2010 && year <= 2019 : yearValue === "2000" ? year >= 2000 && year <= 2009 : year < 2000);
+                return matchesCategory && matchesSearch && matchesFavorite && matchesType && matchesGenre && matchesYear;
+            });
+            if (sortValue === "title-asc") results.sort((a,b) => a.title.localeCompare(b.title));
+            if (sortValue === "title-desc") results.sort((a,b) => b.title.localeCompare(a.title));
+            if (sortValue === "year-desc") results.sort((a,b) => (Number(b.year)||0) - (Number(a.year)||0));
+            if (sortValue === "year-asc") results.sort((a,b) => (Number(a.year)||0) - (Number(b.year)||0));
+            container.innerHTML = "";
+            if (results.length === 0) {
+                container.innerHTML = '<p class="empty">No entertainment found. Try changing your search or filters.</p>';
+                return;
+            }
+            results.forEach(item => {
+                const isFavorite = favorites.includes(item.title);
+                const card = document.createElement("div"); card.className = "card";
+                const poster = document.createElement("div"); poster.className = "poster";
+                const posterText = document.createElement("span"); posterText.textContent = item.title; poster.appendChild(posterText);
+                if (item.image) { const image = document.createElement("img"); image.src = item.image; image.alt = item.title + " poster"; image.loading = "lazy"; image.onerror = () => image.remove(); poster.appendChild(image); }
+                const info = document.createElement("div"); info.className = "card-info";
+                const title = document.createElement("h3"); title.textContent = item.title;
+                const details = document.createElement("p"); details.textContent = `${item.type} | ${item.genre || "Genre unavailable"} | ${item.year || "Year unavailable"}`;
+                const buttons = document.createElement("div"); buttons.className = "card-buttons";
+                const detailsButton = document.createElement("button"); detailsButton.className = "small-btn"; detailsButton.textContent = "Details"; detailsButton.onclick = () => showDetails(item);
+                const favoriteButton = document.createElement("button"); favoriteButton.className = "small-btn favorite"; favoriteButton.textContent = isFavorite ? "♥ Saved" : "♡ Save"; favoriteButton.onclick = () => toggleFavorite(item.title);
+                buttons.append(detailsButton, favoriteButton);
+                const officialActions = document.createElement("div"); officialActions.className = "official-actions";
+                const officialLink = document.createElement("a"); officialLink.className = "official-link"; officialLink.href = item.officialUrl || getOfficialFallback(item); officialLink.target = "_blank"; officialLink.rel = "noopener"; officialLink.textContent = item.type === "Game" ? "Official Game" : item.type === "TV Show" ? "Show Info" : "Movie Info";
+                const trailerLink = document.createElement("a"); trailerLink.className = "official-link youtube"; trailerLink.href = getYouTubeSearchUrl(item); trailerLink.target = "_blank"; trailerLink.rel = "noopener"; trailerLink.textContent = "▶ Trailer";
+                officialActions.append(officialLink, trailerLink); info.append(title, details, buttons, officialActions); card.append(poster, info); container.appendChild(card);
+            });
+        }
+
+        function applyFilters() { renderCurrentView(); }
+        function resetFilters() {
+            ["typeFilter", "genreFilter", "yearFilter", "sortFilter"].forEach(id => { const el = document.getElementById(id); if (el) el.selectedIndex = 0; });
+            currentCategory = "All"; favoritesOnly = false; renderCurrentView();
+        }
+
+        function renderDiscoveryRows() {
+            const items = allItems();
+            const trending = [...items].sort((a,b) => (Number(b.year)||0) - (Number(a.year)||0)).slice(0,10);
+            const trendingList = document.getElementById("trendingList");
+            if (trendingList) {
+                trendingList.innerHTML = "";
+                trending.forEach((item,index) => { const card=document.createElement("div"); card.className="discovery-item"; card.innerHTML=`<strong>#${index+1} ${escapeHTML(item.title)}</strong><small>${escapeHTML(item.type)} · ${escapeHTML(String(item.year))}</small>`; card.onclick=()=>showDetails(item); trendingList.appendChild(card); });
+            }
+            const recentList = document.getElementById("recentList");
+            if (recentList) {
+                recentList.innerHTML = "";
+                const recent = viewedTitles.map(title => items.find(item => item.title === title)).filter(Boolean).slice(0,10);
+                if (!recent.length) recentList.innerHTML='<p class="empty">Titles you open will appear here.</p>';
+                recent.forEach(item=>{const card=document.createElement("div");card.className="discovery-item";card.innerHTML=`<strong>${escapeHTML(item.title)}</strong><small>${escapeHTML(item.type)} · ${escapeHTML(String(item.year))}</small>`;card.onclick=()=>showDetails(item);recentList.appendChild(card);});
+            }
+        }
+        function escapeHTML(value) { return String(value ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch])); }
+        function saveRecentlyViewed(item) {
+            viewedTitles = [item.title, ...viewedTitles.filter(title => title !== item.title)].slice(0,20);
+            localStorage.setItem("sammyFlixRecentlyViewed", JSON.stringify(viewedTitles)); renderDiscoveryRows();
+        }
+        function addNotification(message) {
+            notifications.unshift({message, date:new Date().toLocaleString()}); notifications=notifications.slice(0,15);
+            localStorage.setItem("sammyFlixNotifications", JSON.stringify(notifications)); renderNotifications();
+        }
+        function renderNotifications() {
+            const list=document.getElementById("notificationList"), count=document.getElementById("notificationCount");
+            if (!list || !count) return;
+            count.textContent=notifications.length; list.innerHTML="";
+            if (!notifications.length) list.innerHTML='<p class="notification-item">You are all caught up.</p>';
+            notifications.forEach(note=>{const row=document.createElement("div");row.className="notification-item";row.textContent=note.message+" · "+note.date;list.appendChild(row);});
+        }
+        function toggleNotifications(){document.getElementById("notificationPanel").classList.toggle("open");}
+        function clearNotifications(){notifications=[];localStorage.setItem("sammyFlixNotifications","[]");renderNotifications();}
+        function toggleTheme(){
+            const light=document.body.classList.toggle("light-theme");
+            localStorage.setItem("sammyFlixTheme",light?"light":"dark");
+            document.getElementById("themeToggle").textContent=light?"☾ Dark":"☀ Light";
+            addNotification("Theme changed to "+(light?"light":"dark")+" mode.");
+        }
+        function loadTheme(){const light=localStorage.getItem("sammyFlixTheme")==="light";document.body.classList.toggle("light-theme",light);document.getElementById("themeToggle").textContent=light?"☾ Dark":"☀ Light";}
+
+        function showCategory(category, button) {
+            hideArcade();
+            document.querySelectorAll('.section').forEach(section => section.style.display = '');
+            currentCategory = category;
+            favoritesOnly = false;
+            searchText = "";
+            document.getElementById("search").value = "";
+
+            document.getElementById("sectionTitle").textContent =
+                category === "All" ? "Explore Entertainment" : category + " Collection";
+
+            document.querySelectorAll(".category").forEach(btn => btn.classList.remove("active"));
+            if (button) button.classList.add("active");
+
+            if (category === "TV Show" && !tvMazeLoaded) {
+                loadTVMazeShows();
+            } else if (category === "Movie" && !moviesLoaded) {
+                loadMovies();
+            } else {
+                renderCurrentView();
+            }
+        }
+
+        function searchContent() {
+            searchText = document.getElementById("search").value.toLowerCase().trim();
+            favoritesOnly = false;
+
+            // Search the catalogues already loaded, regardless of the selected category.
+            // This keeps Movies, TV Shows and Games searchable from the same search box.
+            renderCurrentView();
+        }
+
+        function toggleFavorite(title) {
+            if (!currentUser) {
+                openAccountModal();
+                setAccountMessage("Please sign in or create an account before saving titles.");
+                return;
+            }
+            if (favorites.includes(title)) {
+                favorites = favorites.filter(item => item !== title);
+            } else {
+                favorites.push(title);
+            }
+            saveUserFavorites();
+            addNotification((favorites.includes(title) ? "Saved " : "Removed ") + title + (favorites.includes(title) ? " to your list." : " from your list."));
+            renderCurrentView();
+        }
+
+        function showFavorites() {
+            if (!currentUser) {
+                openAccountModal();
+                setAccountMessage("Sign in to view your personal list.");
+                return;
+            }
+            favoritesOnly = true;
+            currentCategory = "All";
+            searchText = "";
+            document.getElementById("search").value = "";
+            document.getElementById("sectionTitle").textContent = "My Favorite List";
+            displayContent(allItems());
+            renderDiscoveryRows();
+        }
+
+        function getYouTubeSearchUrl(item) {
+            const kind = item.type === "Game"
+                ? "official gameplay trailer" : "official trailer";
+            return "https://www.youtube.com/results?search_query=" +
+                encodeURIComponent(item.title + " " + kind);
+        }
+
+        function getOfficialFallback(item) {
+            if (item.type === "TV Show") {
+                return "https://www.tvmaze.com/search?q=" + encodeURIComponent(item.title);
+            }
+            return item.type === "Game"
+                ? "https://www.google.com/search?q=" + encodeURIComponent(item.title + " official game")
+                : "https://www.imdb.com/find/?q=" + encodeURIComponent(item.title);
+        }
+
+        function showDetails(item) {
+            saveRecentlyViewed(item);
+            document.getElementById("modalTitle").textContent = item.title;
+            document.getElementById("modalMeta").textContent =
+                `${item.type} | ${item.genre || "Genre unavailable"} | ${item.year || "Year unavailable"}`;
+            document.getElementById("modalSummary").textContent =
+                item.summary || "A description is not available for this title.";
+
+            const findButton = document.getElementById("modalFindButton");
+            findButton.textContent = item.type === "Game"
+                ? "Official Game Page"
+                : item.type === "TV Show" ? "TV Show Information" : "Movie Information";
+            findButton.onclick = () => openContent(item);
+            document.getElementById("detailsModal").classList.add("open");
+        }
+
+        function closeDetails(event) {
+            if (!event || event.target.id === "detailsModal") {
+                document.getElementById("detailsModal").classList.remove("open");
+            }
+        }
+
+        function openContent(item) {
+            window.open(item.officialUrl || getOfficialFallback(item), "_blank", "noopener");
+        }
+
+        document.addEventListener("keydown", event => {
+            if (event.key === "Escape") {
+                document.getElementById("detailsModal").classList.remove("open");
+            }
+        });
+
+        // Load movies locally and TV show information from TVmaze.
+        displayContent(games);
+        loadMovies();
+        loadTVMazeShows();
+
+        // ---------------- ACCOUNT AND PROFILE (BROWSER DEMO) ----------------
+
+        function getDemoUsers() {
+            try {
+                const users = JSON.parse(localStorage.getItem("sammyFlixUsers") || "[]");
+                return Array.isArray(users) ? users : [];
+            } catch (error) {
+                return [];
+            }
+        }
+
+        function saveDemoUsers(users) {
+            localStorage.setItem("sammyFlixUsers", JSON.stringify(users));
+        }
+
+        function setAccountMessage(message, success = false) {
+            const messageBox = document.getElementById("accountMessage");
+            if (messageBox) {
+                messageBox.textContent = message;
+                messageBox.style.color = success ? "#63d98b" : "#ff727a";
+            }
+        }
+
+        function openAccountModal() {
+            document.getElementById("accountModal").classList.add("open");
+            setAccountMode("login");
+        }
+
+        function closeAccountModal() {
+            document.getElementById("accountModal").classList.remove("open");
+            document.getElementById("accountForm").reset();
+            setAccountMessage("");
+        }
+
+        function setAccountMode(mode) {
+            accountMode = mode;
+            const registering = mode === "register";
+            document.getElementById("accountModalTitle").textContent =
+                registering ? "Create Your Account" : "Welcome Back";
+            document.getElementById("nameLabel").hidden = !registering;
+            document.getElementById("accountName").hidden = !registering;
+            document.getElementById("accountName").required = registering;
+            document.getElementById("accountPassword").autocomplete =
+                registering ? "new-password" : "current-password";
+            document.getElementById("accountSubmit").textContent =
+                registering ? "Create Account" : "Sign In";
+            document.getElementById("loginTab").classList.toggle("active", !registering);
+            document.getElementById("registerTab").classList.toggle("active", registering);
+            setAccountMessage("");
+        }
+
+        function submitAccount(event) {
+            event.preventDefault();
+
+            const name = document.getElementById("accountName").value.trim();
+            const email = document.getElementById("accountEmail").value.trim().toLowerCase();
+            const password = document.getElementById("accountPassword").value;
+            const users = getDemoUsers();
+
+            if (accountMode === "register") {
+                if (name.length < 2) {
+                    setAccountMessage("Please enter your name.");
+                    return;
+                }
+                if (users.some(user => user.email === email)) {
+                    setAccountMessage("An account with this email already exists. Please sign in.");
+                    return;
+                }
+
+                const newUser = {
+                    name: name,
+                    email: email,
+                    password: password,
+                    joined: new Date().toLocaleDateString()
+                };
+
+                users.push(newUser);
+                saveDemoUsers(users);
+                signInUser(newUser);
+                setAccountMessage("Account created successfully!", true);
+                closeAccountModal();
+                return;
+            }
+
+            const foundUser = users.find(user =>
+                user.email === email && user.password === password
+            );
+
+            if (!foundUser) {
+                setAccountMessage("Email or password is incorrect.");
+                return;
+            }
+
+            signInUser(foundUser);
+            closeAccountModal();
+        }
+
+        function signInUser(user) {
+            currentUser = {
+                name: user.name,
+                email: user.email,
+                joined: user.joined || "Not available"
+            };
+            loadUserFavorites();
+            updateAccountDisplay();
+            renderCurrentView();
+        }
+
+        function updateAccountDisplay() {
+            const greeting = document.getElementById("accountGreeting");
+            const action = document.getElementById("accountAction");
+            const profileButton = document.getElementById("profileAction");
+
+            if (currentUser) {
+                greeting.textContent = "Hi, " + currentUser.name.split(" ")[0];
+                action.textContent = "Sign Out";
+                action.onclick = signOut;
+                profileButton.hidden = false;
+            } else {
+                greeting.textContent = "Guest";
+                action.textContent = "Sign In";
+                action.onclick = openAccountModal;
+                profileButton.hidden = true;
+            }
+        }
+
+        function openProfileModal() {
+            if (!currentUser) {
+                openAccountModal();
+                return;
+            }
+            document.getElementById("profileAvatar").textContent =
+                currentUser.name.charAt(0).toUpperCase();
+            document.getElementById("profileName").textContent = currentUser.name;
+            document.getElementById("profileEmail").textContent = currentUser.email;
+            document.getElementById("profileJoined").textContent =
+                "Joined: " + currentUser.joined;
+            document.getElementById("profileSavedCount").textContent =
+                "Saved titles: " + favorites.length;
+            document.getElementById("profileModal").classList.add("open");
+        }
+
+        function closeProfileModal() {
+            document.getElementById("profileModal").classList.remove("open");
+        }
+
+        function signOut() {
+            currentUser = null;
+            favorites = [];
+            favoritesOnly = false;
+            updateAccountDisplay();
+            closeProfileModal();
+            showCategory("All");
+            setStatus("You are signed out. Sign in to use your personal list.");
+        }
+
+        // Start in guest mode. Accounts are stored only in this browser.
+        updateAccountDisplay();
+        loadTheme();
+        renderNotifications();
+        if (notifications.length === 0) addNotification("Welcome to SammyFlix! Your discovery centre is ready.");
+        renderDiscoveryRows();
+
+
+
+                // ---------------- PLAYABLE BROWSER ARCADE ----------------
+                function showArcade() {
+                    document.querySelectorAll('.section').forEach(section => section.style.display = 'none');
+                    document.getElementById('arcadeSection').classList.add('active');
+                    document.getElementById('sectionTitle').textContent = 'SammyFlix Online Arcade';
+                    document.getElementById('arcadeSection').scrollIntoView({behavior:'smooth'});
+                    closeMiniGames();
+                }
+                function hideArcade() { document.getElementById('arcadeSection').classList.remove('active'); }
+                function openMiniGame(id) {
+                    document.querySelectorAll('.game-panel').forEach(panel => panel.classList.remove('active'));
+                    document.getElementById(id).classList.add('active');
+                    document.getElementById(id).scrollIntoView({behavior:'smooth',block:'center'});
+                }
+                function closeMiniGames() { document.querySelectorAll('.game-panel').forEach(panel => panel.classList.remove('active')); }
+        
+                let tttCells = Array(9).fill(''), tttTurn = 'X', tttOver = false;
+                function drawTicTacToe() {
+                    const board=document.getElementById('tttBoard'); board.innerHTML='';
+                    tttCells.forEach((value,index)=>{const b=document.createElement('button');b.className='ttt-cell';b.textContent=value;b.disabled=!!value||tttOver;b.setAttribute('aria-label','Cell '+(index+1)+' '+(value||'empty'));b.onclick=()=>playTicTacToe(index);board.appendChild(b);});
+                }
+                function playTicTacToe(index) {
+                    if(tttCells[index]||tttOver)return; tttCells[index]=tttTurn;
+                    const wins=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+                    const won=wins.some(line=>line.every(i=>tttCells[i]===tttTurn));
+                    if(won){document.getElementById('tttStatus').textContent=tttTurn+' wins!';tttOver=true;}
+                    else if(tttCells.every(Boolean)){document.getElementById('tttStatus').textContent='It is a draw!';tttOver=true;}
+                    else{tttTurn=tttTurn==='X'?'O':'X';document.getElementById('tttStatus').textContent=tttTurn + "'s turn";}
+                    drawTicTacToe();
+                }
+                function resetTicTacToe(){tttCells=Array(9).fill('');tttTurn='X';tttOver=false;document.getElementById('tttStatus').textContent="X's turn";drawTicTacToe();openMiniGame('ticTacToePanel');}
+        
+                let memoryValues=[], memoryOpen=[], memoryMatched=[], memoryLock=false;
+                function startMemoryGame(){
+                    const icons=['🍎','🚀','🎮','⭐','⚽','🎧','🐼','🌈'];memoryValues=[...icons,...icons].sort(()=>Math.random()-.5);memoryOpen=[];memoryMatched=[];memoryLock=false;
+                    document.getElementById('memoryStatus').textContent='Find all eight matching pairs.';drawMemory();openMiniGame('memoryPanel');
+                }
+                function drawMemory(){const board=document.getElementById('memoryBoard');board.innerHTML='';memoryValues.forEach((v,i)=>{const b=document.createElement('button');b.className='memory-card';b.textContent=memoryMatched.includes(i)||memoryOpen.includes(i)?v:'?';b.disabled=memoryMatched.includes(i)||memoryOpen.includes(i);b.onclick=()=>flipMemory(i);board.appendChild(b);});}
+                function flipMemory(i){if(memoryLock||memoryOpen.includes(i)||memoryMatched.includes(i))return;memoryOpen.push(i);drawMemory();if(memoryOpen.length===2){memoryLock=true;const pair=[...memoryOpen];if(memoryValues[pair[0]]===memoryValues[pair[1]]){memoryMatched.push(...pair);memoryOpen=[];memoryLock=false;document.getElementById('memoryStatus').textContent=memoryMatched.length===16?'You matched every pair!':'Good match! Keep going.';drawMemory();}else{document.getElementById('memoryStatus').textContent='Not a match. Try again.';setTimeout(()=>{memoryOpen=[];memoryLock=false;drawMemory();},850);}}}
+        
+                let secretNumber=0, guessCount=0;
+                function startGuessGame(){secretNumber=Math.floor(Math.random()*100)+1;guessCount=0;document.getElementById('guessInput').value='';document.getElementById('guessStatus').textContent='I picked a number from 1 to 100. Make a guess!';openMiniGame('guessPanel');}
+                function submitGuess(){const input=document.getElementById('guessInput');const value=Number(input.value);if(!Number.isInteger(value)||value<1||value>100){document.getElementById('guessStatus').textContent='Enter a whole number from 1 to 100.';return;}guessCount++;document.getElementById('guessStatus').textContent=value===secretNumber?'Correct! You found it in '+guessCount+' guesses.':value<secretNumber?'Too low. Try a higher number.':'Too high. Try a lower number.';if(value===secretNumber)input.disabled=true;}
+                document.addEventListener('DOMContentLoaded',()=>{drawTicTacToe();});
+        
+    </script>
+
+</body>
+</html>
