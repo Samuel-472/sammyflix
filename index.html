@@ -1810,6 +1810,14 @@
                     watchButton.textContent = "▶ Watch Now";
                     watchButton.onclick = () => openFreeMovie(item.title, item.videoUrl, item.credit);
                     buttons.appendChild(watchButton);
+                } else if (item.type === "Movie") {
+                    const whereToWatchLink = document.createElement("a");
+                    whereToWatchLink.className = "official-link";
+                    whereToWatchLink.href = "https://www.justwatch.com/search?q=" + encodeURIComponent(item.title);
+                    whereToWatchLink.target = "_blank";
+                    whereToWatchLink.rel = "noopener";
+                    whereToWatchLink.textContent = "Find Where to Watch";
+                    buttons.appendChild(whereToWatchLink);
                 }
                 const trailerLink = document.createElement("a");
                 trailerLink.className = "official-link youtube";
