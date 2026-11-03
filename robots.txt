@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://samuel-472.github.io/sammyflix/sitemap.xml
