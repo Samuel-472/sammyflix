@@ -1492,7 +1492,7 @@
         <div class="player-box">
             <button class="close-modal" onclick="closeFreeMovie()" aria-label="Close player">&times;</button>
             <h2 class="player-heading" id="freeMovieTitle">Now Playing</h2>
-            <video class="player-frame" id="freeMovieFrame" controls playsinline preload="metadata" title="SammyFlix movie player"></video>
+            <iframe class="player-frame" id="freeMovieFrame" title="SammyFlix movie player" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
             <p class="player-credit" id="freeMovieCredit"></p>
         </div>
     </div>
@@ -1594,18 +1594,18 @@
         // Local movie catalogue: search works even if an external movie API is unavailable.
         // Openly available Blender open movies. Video streams are served by Blender's video host.
         const movieCatalogueData = [
-            { title: "Elephants Dream", genre: "Animation", year: 2006, summary: "Two colleagues explore a strange, surreal machine world.", officialUrl: "https://studio.blender.org/films/", videoUrl: "https://video.blender.org/static/webseed/cccc3e60-0291-4ecc-aa56-39b2e2c7d0d5-720.mp4", credit: "Blender Foundation / Blender Studio. Please retain the film's original credits and check its official page for licence details." },
-            { title: "Big Buck Bunny", genre: "Animation", year: 2008, summary: "A gentle rabbit enjoys a peaceful day in the forest.", officialUrl: "https://studio.blender.org/films/", videoUrl: "https://video.blender.org/static/webseed/bf1f3fb5-b119-4f9f-9930-8e20e892b898-720.mp4", credit: "Blender Foundation / Blender Studio. Please retain the film's original credits and check its official page for licence details." },
-            { title: "Sintel", genre: "Fantasy", year: 2010, summary: "A young woman journeys to find her lost dragon friend.", officialUrl: "https://studio.blender.org/films/", videoUrl: "https://video.blender.org/static/webseed/0eb052d0-fd51-43e6-aa33-ecdbf77a5d40-720.mp4", credit: "Blender Foundation / Blender Studio. Please retain the film's original credits and check its official page for licence details." },
-            { title: "Tears of Steel", genre: "Science Fiction", year: 2012, summary: "A science-fiction short combining live action and visual effects.", officialUrl: "https://studio.blender.org/films/", videoUrl: "https://video.blender.org/static/webseed/8533ea43-4271-4a57-9694-e9d0b35e1aa1-720.mp4", credit: "Blender Foundation / Blender Studio. Please retain the film's original credits and check its official page for licence details." },
-            { title: "Caminandes: Gran Dillama", genre: "Animation", year: 2013, summary: "A llama faces a series of comic challenges in Patagonia.", officialUrl: "https://studio.blender.org/films/", videoUrl: "https://video.blender.org/static/webseed/fb70d459-48d2-4db5-adba-813c84f9200a-720.mp4", credit: "Blender Foundation / Blender Studio. Please retain the film's original credits and check its official page for licence details." },
-            { title: "Cosmos Laundromat: First Cycle", genre: "Fantasy", year: 2015, summary: "A sheep meets a salesman who offers him a chance to change his life.", officialUrl: "https://studio.blender.org/films/", videoUrl: "https://video.blender.org/static/webseed/f507dfdc-e73e-45a4-9778-d758cbe1ce96-720.mp4", credit: "Blender Foundation / Blender Studio. Please retain the film's original credits and check its official page for licence details." },
-            { title: "Glass Half", genre: "Comedy", year: 2015, summary: "A playful animated short about art and opinions.", officialUrl: "https://studio.blender.org/films/", videoUrl: "https://video.blender.org/static/webseed/64222c8a-c4c7-4b3b-9850-7fb2078edcf6-720.mp4", credit: "Blender Foundation / Blender Studio. Please retain the film's original credits and check its official page for licence details." },
-            { title: "Caminandes: Llamigos", genre: "Animation", year: 2016, summary: "Koro the llama struggles through the Patagonian winter.", officialUrl: "https://studio.blender.org/films/", videoUrl: "https://video.blender.org/static/webseed/23f3ef79-15dc-44c5-aa45-cf92e78a4509-720.mp4", credit: "Blender Foundation / Blender Studio. Please retain the film's original credits and check its official page for licence details." },
-            { title: "Agent 327: Operation Barbershop", genre: "Comedy", year: 2017, summary: "A secret agent visits a barbershop in this animated action-comedy teaser.", officialUrl: "https://studio.blender.org/films/", videoUrl: "https://video.blender.org/static/webseed/264ff760-803e-430e-8d81-15648e904183-720.mp4", credit: "Blender Foundation / Blender Studio. Please retain the film's original credits and check its official page for licence details." },
-            { title: "Spring", genre: "Fantasy", year: 2019, summary: "A shepherd girl and her dog encounter ancient spirits in the mountains.", officialUrl: "https://studio.blender.org/films/", videoUrl: "https://video.blender.org/static/webseed/3d95fb3d-c866-42c8-9db1-fe82f48ccb95-720.mp4", credit: "Blender Foundation / Blender Studio. Please retain the film's original credits and check its official page for licence details." },
-            { title: "Coffee Run", genre: "Animation", year: 2020, summary: "A young woman reflects on memories during a coffee run.", officialUrl: "https://studio.blender.org/films/", videoUrl: "https://video.blender.org/static/webseed/ff8fe61b-026f-4f07-b66b-2a790d6f6ab1-720.mp4", credit: "Blender Foundation / Blender Studio. Please retain the film's original credits and check its official page for licence details." },
-            { title: "Sprite Fright", genre: "Comedy", year: 2021, summary: "Teenagers in a forest encounter mysterious mushroom creatures.", officialUrl: "https://studio.blender.org/films/", videoUrl: "https://video.blender.org/download/videos/a69d68a5-a0e0-4a80-9d66-49f093c97aaf-720.mp4", credit: "Blender Foundation / Blender Studio. Please retain the film's original credits and check its official page for licence details." }
+            { title: "Elephants Dream", genre: "Animation", year: 2006, summary: "Two colleagues explore a strange, surreal machine world.", officialUrl: "https://studio.blender.org/films/", videoId: "cccc3e60-0291-4ecc-aa56-39b2e2c7d0d5", credit: "Blender Foundation / Blender Studio. Please retain the film's original credits and check its official page for licence details." },
+            { title: "Big Buck Bunny", genre: "Animation", year: 2008, summary: "A gentle rabbit enjoys a peaceful day in the forest.", officialUrl: "https://studio.blender.org/films/", videoId: "bf1f3fb5-b119-4f9f-9930-8e20e892b898", credit: "Blender Foundation / Blender Studio. Please retain the film's original credits and check its official page for licence details." },
+            { title: "Sintel", genre: "Fantasy", year: 2010, summary: "A young woman journeys to find her lost dragon friend.", officialUrl: "https://studio.blender.org/films/", videoId: "0eb052d0-fd51-43e6-aa33-ecdbf77a5d40", credit: "Blender Foundation / Blender Studio. Please retain the film's original credits and check its official page for licence details." },
+            { title: "Tears of Steel", genre: "Science Fiction", year: 2012, summary: "A science-fiction short combining live action and visual effects.", officialUrl: "https://studio.blender.org/films/", videoId: "8533ea43-4271-4a57-9694-e9d0b35e1aa1", credit: "Blender Foundation / Blender Studio. Please retain the film's original credits and check its official page for licence details." },
+            { title: "Caminandes: Gran Dillama", genre: "Animation", year: 2013, summary: "A llama faces a series of comic challenges in Patagonia.", officialUrl: "https://studio.blender.org/films/", videoId: "fb70d459-48d2-4db5-adba-813c84f9200a", credit: "Blender Foundation / Blender Studio. Please retain the film's original credits and check its official page for licence details." },
+            { title: "Cosmos Laundromat: First Cycle", genre: "Fantasy", year: 2015, summary: "A sheep meets a salesman who offers him a chance to change his life.", officialUrl: "https://studio.blender.org/films/", videoId: "f507dfdc-e73e-45a4-9778-d758cbe1ce96", credit: "Blender Foundation / Blender Studio. Please retain the film's original credits and check its official page for licence details." },
+            { title: "Glass Half", genre: "Comedy", year: 2015, summary: "A playful animated short about art and opinions.", officialUrl: "https://studio.blender.org/films/", videoId: "64222c8a-c4c7-4b3b-9850-7fb2078edcf6", credit: "Blender Foundation / Blender Studio. Please retain the film's original credits and check its official page for licence details." },
+            { title: "Caminandes: Llamigos", genre: "Animation", year: 2016, summary: "Koro the llama struggles through the Patagonian winter.", officialUrl: "https://studio.blender.org/films/", videoId: "23f3ef79-15dc-44c5-aa45-cf92e78a4509", credit: "Blender Foundation / Blender Studio. Please retain the film's original credits and check its official page for licence details." },
+            { title: "Agent 327: Operation Barbershop", genre: "Comedy", year: 2017, summary: "A secret agent visits a barbershop in this animated action-comedy teaser.", officialUrl: "https://studio.blender.org/films/", videoId: "264ff760-803e-430e-8d81-15648e904183", credit: "Blender Foundation / Blender Studio. Please retain the film's original credits and check its official page for licence details." },
+            { title: "Spring", genre: "Fantasy", year: 2019, summary: "A shepherd girl and her dog encounter ancient spirits in the mountains.", officialUrl: "https://studio.blender.org/films/", videoId: "3d95fb3d-c866-42c8-9db1-fe82f48ccb95", credit: "Blender Foundation / Blender Studio. Please retain the film's original credits and check its official page for licence details." },
+            { title: "Coffee Run", genre: "Animation", year: 2020, summary: "A young woman reflects on memories during a coffee run.", officialUrl: "https://studio.blender.org/films/", videoId: "ff8fe61b-026f-4f07-b66b-2a790d6f6ab1", credit: "Blender Foundation / Blender Studio. Please retain the film's original credits and check its official page for licence details." },
+            { title: "Sprite Fright", genre: "Comedy", year: 2021, summary: "Teenagers in a forest encounter mysterious mushroom creatures.", officialUrl: "https://studio.blender.org/films/", videoId: "a69d68a5-a0e0-4a80-9d66-49f093c97aaf", credit: "Blender Foundation / Blender Studio. Please retain the film's original credits and check its official page for licence details." }
         ].map(movie => ({ ...movie, type: "Movie", image: "" }));
 
         const games = [
@@ -1806,14 +1806,14 @@
                 const details = document.createElement("p"); details.textContent = `${item.type} | ${item.genre || "Genre unavailable"} | ${item.year || "Year unavailable"}`;
                 const buttons = document.createElement("div"); buttons.className = "card-buttons";
                 if (item.type === "Movie") {
-                    // Use Blender's official film page instead of an unreliable direct MP4 stream.
-                    const watchLink = document.createElement("a");
-                    watchLink.className = "small-btn";
-                    watchLink.href = item.officialUrl || "https://studio.blender.org/films/";
-                    watchLink.target = "_blank";
-                    watchLink.rel = "noopener noreferrer";
-                    watchLink.textContent = "▶ Watch on Blender Studio";
-                    buttons.appendChild(watchLink);
+                    const watchButton = document.createElement("button");
+                    watchButton.className = "small-btn";
+                    watchButton.textContent = "▶ Watch Now";
+                    watchButton.type = "button";
+                    watchButton.addEventListener("click", () => {
+                        openFreeMovie(item.title, item.videoId, item.credit);
+                    });
+                    buttons.appendChild(watchButton);
                 }
                 const trailerLink = document.createElement("a");
                 trailerLink.className = "official-link youtube";
@@ -1986,38 +1986,28 @@
         });
 
         
-        // Play Blender open movies in the SammyFlix HTML5 video player.
-        function openFreeMovie(title, videoUrl, credit) {
+        // Stream Blender's official PeerTube player inside SammyFlix.
+        function openFreeMovie(title, videoId, credit) {
             const player = document.getElementById("freeMoviePlayer");
-            const video = document.getElementById("freeMovieFrame");
+            const frame = document.getElementById("freeMovieFrame");
+            if (!videoId) {
+                document.getElementById("freeMovieCredit").textContent =
+                    "The embedded player is not available for this title yet.";
+                return;
+            }
             document.getElementById("freeMovieTitle").textContent = title;
-            document.getElementById("freeMovieCredit").textContent = credit || "";
-            video.onerror = () => {
-                const creditLine = document.getElementById("freeMovieCredit");
-                creditLine.textContent = "This video could not stream from its current source. Open the official Blender Films collection to find the film: https://studio.blender.org/films/";
-                creditLine.style.color = "#ffb3b3";
-            };
-            video.onloadeddata = () => {
-                const creditLine = document.getElementById("freeMovieCredit");
-                creditLine.textContent = credit || "";
-                creditLine.style.color = "";
-            };
-            video.src = videoUrl;
+            document.getElementById("freeMovieCredit").textContent = credit || "Video streamed from Blender's official PeerTube server.";
+            frame.src = "https://video.blender.org/videos/embed/" +
+                encodeURIComponent(videoId) + "?warningTitle=0&p2p=0";
             player.classList.add("open");
             document.body.style.overflow = "hidden";
-            video.load();
-            video.play().catch(() => {
-                // The viewer can press Play if browser autoplay is blocked.
-            });
         }
 
         function closeFreeMovie(event) {
             if (event && event.target !== document.getElementById("freeMoviePlayer")) return;
             document.getElementById("freeMoviePlayer").classList.remove("open");
-            const video = document.getElementById("freeMovieFrame");
-            video.pause();
-            video.removeAttribute("src");
-            video.load();
+            const frame = document.getElementById("freeMovieFrame");
+            frame.src = "about:blank";
             document.body.style.overflow = "";
         }
 
