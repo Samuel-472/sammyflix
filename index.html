@@ -1645,6 +1645,76 @@
                 summary: "A football simulation game featuring clubs and competitions.",
                 officialUrl: "https://www.ea.com/games/ea-sports-fc/fc-25"
             }
+            ,{
+                title: "Smash Karts",
+                type: "Game",
+                genre: "Racing",
+                year: 2026,
+                image: "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?w=500",
+                summary: "Fast multiplayer kart racing battles playable in your browser.",
+                officialUrl: "https://smashkarts.io/",
+                onlineGame: true
+            },
+            {
+                title: "Moto X3M",
+                type: "Game",
+                genre: "Motorcycle Racing",
+                year: 2026,
+                image: "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=500",
+                summary: "A motorcycle stunt racing game with obstacle-filled tracks.",
+                officialUrl: "https://poki.com/en/moto-x3m",
+                onlineGame: true
+            },
+            {
+                title: "Drift Hunters",
+                type: "Game",
+                genre: "Car Racing",
+                year: 2026,
+                image: "https://images.unsplash.com/photo-150373 dwarf?w=500",
+                summary: "A 3D car drifting game with tracks and cars to drive.",
+                officialUrl: "https://www.drifthunters.com/",
+                onlineGame: true
+            },
+            {
+                title: "Slither.io",
+                type: "Game",
+                genre: "Arcade",
+                year: 2026,
+                image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=500",
+                summary: "A multiplayer arcade game where you guide and grow your snake.",
+                officialUrl: "https://slither.io/",
+                onlineGame: true
+            },
+            {
+                title: "2048",
+                type: "Game",
+                genre: "Puzzle",
+                year: 2026,
+                image: "https://images.unsplash.com/photo-1611996575749-79a3a250f948?w=500",
+                summary: "A number puzzle game where you combine tiles to reach 2048.",
+                officialUrl: "https://play2048.co/",
+                onlineGame: true
+            },
+            {
+                title: "Lichess",
+                type: "Game",
+                genre: "Board Game",
+                year: 2026,
+                image: "https://images.unsplash.com/photo-1586165368502-1bad197a6461?w=500",
+                summary: "Play chess online against friends or computer opponents.",
+                officialUrl: "https://lichess.org/",
+                onlineGame: true
+            },
+            {
+                title: "Gartic Phone",
+                type: "Game",
+                genre: "Party Game",
+                year: 2026,
+                image: "https://images.unsplash.com/photo-1606092195730-5d7b9af1efc5?w=500",
+                summary: "A drawing and guessing party game to enjoy with friends.",
+                officialUrl: "https://garticphone.com/",
+                onlineGame: true
+            }
         ];
 
         let currentUser = null;
@@ -1815,22 +1885,22 @@
                     });
                     buttons.appendChild(watchButton);
                 }
-                if (item.type !== "Movie") {
-
+                if (item.type === "Game" && item.onlineGame) {
+                    const playLink = document.createElement("a");
+                    playLink.className = "small-btn";
+                    playLink.href = item.officialUrl;
+                    playLink.target = "_blank";
+                    playLink.rel = "noopener noreferrer";
+                    playLink.textContent = "▶ Play Now";
+                    buttons.appendChild(playLink);
+                } else if (item.type !== "Movie") {
                     const trailerLink = document.createElement("a");
-
                     trailerLink.className = "official-link youtube";
-
                     trailerLink.href = getYouTubeSearchUrl(item);
-
                     trailerLink.target = "_blank";
-
                     trailerLink.rel = "noopener";
-
                     trailerLink.textContent = "▶ Trailer";
-
                     buttons.appendChild(trailerLink);
-
                 }
                 info.append(title, details, buttons); card.append(poster, info); container.appendChild(card);
             });
