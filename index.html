@@ -2249,5 +2249,67 @@
         
     </script>
 
+
+    <!-- SAMMYFLIX MOVIE DISPLAY FALLBACK: keeps the movie shelf usable if another script fails -->
+    <script>
+    (() => {
+        const shelf = document.getElementById("contentList");
+        if (!shelf || shelf.children.length) return;
+
+        const films = [
+            ["Elephants Dream", 2006], ["Big Buck Bunny", 2008],
+            ["Sintel", 2010], ["Tears of Steel", 2012],
+            ["Caminandes: Gran Dillama", 2013], ["Cosmos Laundromat: First Cycle", 2015],
+            ["Glass Half", 2015], ["Caminandes: Llamigos", 2016],
+            ["Agent 327: Operation Barbershop", 2017], ["Spring", 2019],
+            ["Coffee Run", 2020], ["Sprite Fright", 2021]
+        ];
+        shelf.innerHTML = "";
+        films.forEach(([name, year], index) => {
+            const card = document.createElement("article");
+            card.className = "card";
+            const poster = document.createElement("div");
+            poster.className = "poster";
+            const label = document.createElement("span");
+            label.textContent = name;
+            poster.appendChild(label);
+            const info = document.createElement("div");
+            info.className = "card-info";
+            const title = document.createElement("h3");
+            title.textContent = name;
+            const meta = document.createElement("p");
+            meta.textContent = "Open Blender short film · " + year;
+            const actions = document.createElement("div");
+            actions.className = "card-buttons";
+            const watch = document.createElement("a");
+            watch.className = "small-btn";
+            watch.textContent = "▶ Watch Film";
+            watch.href = "https://studio.blender.org/films/";
+            watch.target = "_blank";
+            watch.rel = "noopener noreferrer";
+            watch.style.textAlign = "center";
+            watch.style.textDecoration = "none";
+            watch.style.display = "block";
+            const trailer = document.createElement("a");
+            trailer.className = "small-btn favorite";
+            trailer.textContent = "Trailer";
+            trailer.href = "https://www.youtube.com/results?search_query=" + encodeURIComponent(name + " official Blender film");
+            trailer.target = "_blank";
+            trailer.rel = "noopener noreferrer";
+            trailer.style.textAlign = "center";
+            trailer.style.textDecoration = "none";
+            trailer.style.display = "block";
+            actions.append(watch, trailer);
+            info.append(title, meta, actions);
+            card.append(poster, info);
+            shelf.appendChild(card);
+        });
+        const status = document.getElementById("catalogueStatus");
+        if (status) status.textContent = "Showing the built-in movie collection. Use Watch Film to open Blender's official film collection.";
+        const heading = document.getElementById("sectionTitle");
+        if (heading) heading.textContent = "Movies";
+    })();
+    </script>
+
 </body>
 </html>
