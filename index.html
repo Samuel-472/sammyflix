@@ -1602,7 +1602,7 @@
             { title: "Cosmos Laundromat: First Cycle", genre: "Fantasy", year: 2015, summary: "A sheep meets a salesman who offers him a chance to change his life.", officialUrl: "https://studio.blender.org/films/", videoId: "f507dfdc-e73e-45a4-9778-d758cbe1ce96", credit: "Blender Foundation / Blender Studio. Please retain the film's original credits and check its official page for licence details." },
             { title: "Glass Half", genre: "Comedy", year: 2015, summary: "A playful animated short about art and opinions.", officialUrl: "https://studio.blender.org/films/", videoId: "64222c8a-c4c7-4b3b-9850-7fb2078edcf6", credit: "Blender Foundation / Blender Studio. Please retain the film's original credits and check its official page for licence details." },
             { title: "Caminandes: Llamigos", genre: "Animation", year: 2016, summary: "Koro the llama struggles through the Patagonian winter.", officialUrl: "https://studio.blender.org/films/", videoId: "23f3ef79-15dc-44c5-aa45-cf92e78a4509", credit: "Blender Foundation / Blender Studio. Please retain the film's original credits and check its official page for licence details." },
-            { title: "Agent 327: Operation Barbershop", genre: "Comedy", year: 2017, summary: "A secret agent visits a barbershop in this animated action-comedy teaser.", officialUrl: "https://studio.blender.org/films/", videoId: "264ff760-803e-430e-8d81-15648e904183", credit: "Blender Foundation / Blender Studio. Please retain the film's original credits and check its official page for licence details." },
+
             { title: "Spring", genre: "Fantasy", year: 2019, summary: "A shepherd girl and her dog encounter ancient spirits in the mountains.", officialUrl: "https://studio.blender.org/films/", videoId: "3d95fb3d-c866-42c8-9db1-fe82f48ccb95", credit: "Blender Foundation / Blender Studio. Please retain the film's original credits and check its official page for licence details." },
             { title: "Coffee Run", genre: "Animation", year: 2020, summary: "A young woman reflects on memories during a coffee run.", officialUrl: "https://studio.blender.org/films/", videoId: "ff8fe61b-026f-4f07-b66b-2a790d6f6ab1", credit: "Blender Foundation / Blender Studio. Please retain the film's original credits and check its official page for licence details." },
             { title: "Sprite Fright", genre: "Comedy", year: 2021, summary: "Teenagers in a forest encounter mysterious mushroom creatures.", officialUrl: "https://studio.blender.org/films/", videoId: "a69d68a5-a0e0-4a80-9d66-49f093c97aaf", credit: "Blender Foundation / Blender Studio. Please retain the film's original credits and check its official page for licence details." }
@@ -1815,13 +1815,23 @@
                     });
                     buttons.appendChild(watchButton);
                 }
-                const trailerLink = document.createElement("a");
-                trailerLink.className = "official-link youtube";
-                trailerLink.href = getYouTubeSearchUrl(item);
-                trailerLink.target = "_blank";
-                trailerLink.rel = "noopener";
-                trailerLink.textContent = "▶ Trailer";
-                buttons.appendChild(trailerLink);
+                if (item.type !== "Movie") {
+
+                    const trailerLink = document.createElement("a");
+
+                    trailerLink.className = "official-link youtube";
+
+                    trailerLink.href = getYouTubeSearchUrl(item);
+
+                    trailerLink.target = "_blank";
+
+                    trailerLink.rel = "noopener";
+
+                    trailerLink.textContent = "▶ Trailer";
+
+                    buttons.appendChild(trailerLink);
+
+                }
                 info.append(title, details, buttons); card.append(poster, info); container.appendChild(card);
             });
         }
@@ -2234,67 +2244,6 @@
         
     </script>
 
-
-    <!-- SAMMYFLIX MOVIE DISPLAY FALLBACK: keeps the movie shelf usable if another script fails -->
-    <script>
-    (() => {
-        const shelf = document.getElementById("contentList");
-        if (!shelf || shelf.children.length) return;
-
-        const films = [
-            ["Elephants Dream", 2006], ["Big Buck Bunny", 2008],
-            ["Sintel", 2010], ["Tears of Steel", 2012],
-            ["Caminandes: Gran Dillama", 2013], ["Cosmos Laundromat: First Cycle", 2015],
-            ["Glass Half", 2015], ["Caminandes: Llamigos", 2016],
-            ["Agent 327: Operation Barbershop", 2017], ["Spring", 2019],
-            ["Coffee Run", 2020], ["Sprite Fright", 2021]
-        ];
-        shelf.innerHTML = "";
-        films.forEach(([name, year], index) => {
-            const card = document.createElement("article");
-            card.className = "card";
-            const poster = document.createElement("div");
-            poster.className = "poster";
-            const label = document.createElement("span");
-            label.textContent = name;
-            poster.appendChild(label);
-            const info = document.createElement("div");
-            info.className = "card-info";
-            const title = document.createElement("h3");
-            title.textContent = name;
-            const meta = document.createElement("p");
-            meta.textContent = "Open Blender short film · " + year;
-            const actions = document.createElement("div");
-            actions.className = "card-buttons";
-            const watch = document.createElement("a");
-            watch.className = "small-btn";
-            watch.textContent = "▶ Watch Film";
-            watch.href = "https://studio.blender.org/films/";
-            watch.target = "_blank";
-            watch.rel = "noopener noreferrer";
-            watch.style.textAlign = "center";
-            watch.style.textDecoration = "none";
-            watch.style.display = "block";
-            const trailer = document.createElement("a");
-            trailer.className = "small-btn favorite";
-            trailer.textContent = "Trailer";
-            trailer.href = "https://www.youtube.com/results?search_query=" + encodeURIComponent(name + " official Blender film");
-            trailer.target = "_blank";
-            trailer.rel = "noopener noreferrer";
-            trailer.style.textAlign = "center";
-            trailer.style.textDecoration = "none";
-            trailer.style.display = "block";
-            actions.append(watch, trailer);
-            info.append(title, meta, actions);
-            card.append(poster, info);
-            shelf.appendChild(card);
-        });
-        const status = document.getElementById("catalogueStatus");
-        if (status) status.textContent = "Showing the built-in movie collection. Use Watch Film to open Blender's official film collection.";
-        const heading = document.getElementById("sectionTitle");
-        if (heading) heading.textContent = "Movies";
-    })();
-    </script>
 
 </body>
 </html>
