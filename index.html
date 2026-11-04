@@ -2215,9 +2215,42 @@
                 email: user.email,
                 joined: user.joined || "Not available"
             };
+
+            // Remember this account on this browser without saving the password again.
+            try {
+                localStorage.setItem("sammyFlixRememberedEmail", currentUser.email);
+            } catch (error) {
+                console.warn("SammyFlix could not save the sign-in session.", error);
+            }
+
             loadUserFavorites();
             updateAccountDisplay();
             renderCurrentView();
+        }
+
+        function restoreRememberedUser() {
+            try {
+                const rememberedEmail = localStorage.getItem("sammyFlixRememberedEmail");
+                if (!rememberedEmail) return;
+
+                const savedUser = getDemoUsers().find(user =>
+                    user.email === rememberedEmail
+                );
+
+                if (savedUser) {
+                    currentUser = {
+                        name: savedUser.name,
+                        email: savedUser.email,
+                        joined: savedUser.joined || "Not available"
+                    };
+                    loadUserFavorites();
+                } else {
+                    localStorage.removeItem("sammyFlixRememberedEmail");
+                }
+            } catch (error) {
+                console.warn("SammyFlix could not restore the sign-in session.", error);
+                currentUser = null;
+            }
         }
 
         function updateAccountDisplay() {
@@ -2262,13 +2295,19 @@
             currentUser = null;
             favorites = [];
             favoritesOnly = false;
+            try {
+                localStorage.removeItem("sammyFlixRememberedEmail");
+            } catch (error) {
+                console.warn("SammyFlix could not clear the remembered session.", error);
+            }
             updateAccountDisplay();
             closeProfileModal();
             showCategory("All");
             setStatus("You are signed out. Sign in to use your personal list.");
         }
 
-        // Start in guest mode. Accounts are stored only in this browser.
+        // Restore the last signed-in account on this browser, if it still exists.
+        restoreRememberedUser();
         updateAccountDisplay();
         loadTheme();
         renderNotifications();
