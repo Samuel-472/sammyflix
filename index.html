@@ -1344,6 +1344,25 @@
         body.light-theme .free-watch-info p, body.light-theme .free-watch-section > p { color: #555; }
         @media (max-width: 600px) { .player-box { padding: 10px; } .free-watch-art { min-height: 150px; } }
 
+    
+        /* SammyFlix feature hub */
+        .sf-hub { margin: 10px 5% 35px; padding: 25px; border: 1px solid #333; border-radius: 14px; background: #121212; }
+        .sf-feature-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(235px,1fr)); gap:14px; }
+        .sf-feature { background:#1d1d1d; border:1px solid #383838; border-radius:10px; padding:16px; min-width:0; }
+        .sf-feature h3 { margin-bottom:8px; font-size:17px; }
+        .sf-feature p,.sf-feature small { color:#aaa; font-size:13px; line-height:1.5; display:block; margin-bottom:10px; }
+        .sf-feature label { display:block; color:#ddd; font-size:13px; margin:9px 0; }
+        .sf-feature select,.sf-feature textarea { display:block; width:100%; margin-top:5px; padding:9px; color:#fff; background:#101010; border:1px solid #555; border-radius:5px; }
+        .sf-feature button { padding:8px 10px; color:#fff; background:#a90b14; border:0; border-radius:5px; cursor:pointer; margin:3px; }
+        .sf-mini-list { display:grid; gap:7px; }
+        .sf-mini-item { padding:8px 10px; background:#292929; border-radius:5px; color:#eee; font-size:13px; cursor:pointer; }
+        .sf-mini-item:hover { background:#3b2527; }
+        .sf-actions { display:flex; flex-wrap:wrap; align-items:center; gap:5px; }
+        .sf-stats { display:grid; grid-template-columns:repeat(2,1fr); gap:8px; }
+        .sf-stat { padding:10px; background:#292929; border-radius:6px; font-size:13px; color:#bbb; }
+        .sf-stat strong { display:block; color:#fff; font-size:20px; }
+        @media(max-width:600px){.sf-hub{margin:8px 3%;padding:15px;}}
+
     </style>
 </head>
 
@@ -1483,6 +1502,18 @@
 
         <p id="catalogueStatus" style="color:#aaa;font-size:13px;margin:-10px 0 18px;">Loading entertainment catalogue...</p>
         <div class="movies" id="contentList"></div>
+        <section class="section sf-hub" id="sammyHub">
+            <h2>✨ Your SammyFlix Hub</h2>
+            <div class="sf-feature-grid">
+                <article class="sf-feature"><h3>▶ Continue Exploring</h3><p>Pick up from titles you recently opened.</p><div id="continueList" class="sf-mini-list"></div></article>
+                <article class="sf-feature"><h3>💡 Recommended for You</h3><p>Suggestions based on genres in your saved list.</p><div id="recommendList" class="sf-mini-list"></div></article>
+                <article class="sf-feature"><h3>🗂 My Collections</h3><p>Choose a collection to filter your saved titles.</p><div class="sf-actions"><button onclick="showCollection('Animation')">Animation</button><button onclick="showCollection('Action')">Action</button><button onclick="showCollection('Comedy')">Comedy</button><button onclick="showCollection('All')">All saved</button></div></article>
+                <article class="sf-feature"><h3>👥 Profiles</h3><p>Separate saved lists for profiles on this browser.</p><div class="sf-actions"><select id="profileSelect" aria-label="Choose profile" onchange="switchProfile(this.value)"><option>Main</option></select><button onclick="createProfile()">＋ Add profile</button></div><small id="profileNote">Sign in to manage profiles.</small></article>
+                <article class="sf-feature"><h3>🌐 Playback preferences</h3><p>Save your preferred subtitle and audio languages. Actual availability depends on the video provider.</p><label>Subtitles <select id="subtitlePreference" onchange="savePlaybackPreferences()"><option>Off</option><option>English</option><option>French</option><option>Kinyarwanda</option><option>Dutch</option></select></label><label>Audio <select id="audioPreference" onchange="savePlaybackPreferences()"><option>Original audio</option><option>English</option><option>French</option><option>Kinyarwanda</option><option>Dutch</option></select></label><small id="languageNote">Preferences are saved on this browser.</small></article>
+                <article class="sf-feature"><h3>⭐ Ratings & Reviews</h3><p>Leave a local review for a movie or show.</p><label>Title <select id="reviewTitle"></select></label><label>Rating <select id="reviewRating"><option value="5">★★★★★</option><option value="4">★★★★☆</option><option value="3">★★★☆☆</option><option value="2">★★☆☆☆</option><option value="1">★☆☆☆☆</option></select></label><textarea id="reviewText" maxlength="400" placeholder="Write a short review..." rows="3"></textarea><button onclick="submitReview()">Submit review</button><div id="reviewList" class="sf-mini-list"></div></article>
+                <article class="sf-feature"><h3>📊 Admin Dashboard</h3><p>Local demo statistics for this browser (not a secure admin system).</p><div id="adminStats" class="sf-stats"></div></article>
+            </div>
+        </section>
 
     </section>
 
@@ -1731,22 +1762,24 @@
         let favorites = [];
         let accountMode = "login";
 
+        let activeProfile = "Main";
+
+        function profileStorageKey() {
+            return "sammyFlixFavorites_" + currentUser.email + "_" + activeProfile;
+        }
+
         function loadUserFavorites() {
-            if (!currentUser) {
-                favorites = [];
-                return;
-            }
+            if (!currentUser) { favorites = []; return; }
             try {
-                const saved = JSON.parse(localStorage.getItem("sammyFlixFavorites_" + currentUser.email) || "[]");
+                const saved = JSON.parse(localStorage.getItem(profileStorageKey()) ||
+                    localStorage.getItem("sammyFlixFavorites_" + currentUser.email) || "[]");
                 favorites = Array.isArray(saved) ? saved : [];
-            } catch (error) {
-                favorites = [];
-            }
+            } catch (error) { favorites = []; }
         }
 
         function saveUserFavorites() {
             if (!currentUser) return;
-            localStorage.setItem("sammyFlixFavorites_" + currentUser.email, JSON.stringify(favorites));
+            localStorage.setItem(profileStorageKey(), JSON.stringify(favorites));
         }
 
         function cleanText(value) {
@@ -2361,7 +2394,108 @@
                 function submitGuess(){const input=document.getElementById('guessInput');const value=Number(input.value);if(!Number.isInteger(value)||value<1||value>100){document.getElementById('guessStatus').textContent='Enter a whole number from 1 to 100.';return;}guessCount++;document.getElementById('guessStatus').textContent=value===secretNumber?'Correct! You found it in '+guessCount+' guesses.':value<secretNumber?'Too low. Try a higher number.':'Too high. Try a lower number.';if(value===secretNumber)input.disabled=true;}
                 document.addEventListener('DOMContentLoaded',()=>{drawTicTacToe();});
         
-    </script>
+    
+        // ---------------- EXTRA SAMMYFLIX FEATURES ----------------
+        function getAllProfiles() {
+            if (!currentUser) return ["Main"];
+            try {
+                const list = JSON.parse(localStorage.getItem("sammyFlixProfiles_" + currentUser.email) || '["Main"]');
+                return Array.isArray(list) && list.length ? list : ["Main"];
+            } catch (error) { return ["Main"]; }
+        }
+        function renderProfiles() {
+            const select=document.getElementById("profileSelect");
+            if(!select)return;
+            const profiles=getAllProfiles();
+            if(!profiles.includes(activeProfile)) activeProfile=profiles[0];
+            select.innerHTML="";
+            profiles.forEach(name=>{const option=document.createElement("option");option.value=name;option.textContent=name;select.appendChild(option);});
+            select.value=activeProfile;
+            document.getElementById("profileNote").textContent=currentUser ? "Active profile: "+activeProfile : "Sign in to save separate profile lists.";
+        }
+        function createProfile() {
+            if(!currentUser){openAccountModal();setAccountMessage("Sign in before creating profiles.");return;}
+            const name=prompt("Enter a profile name (up to 20 characters):");
+            if(!name || !name.trim())return;
+            const clean=name.trim().slice(0,20);
+            const profiles=getAllProfiles();
+            if(profiles.some(p=>p.toLowerCase()===clean.toLowerCase())){alert("That profile already exists.");return;}
+            profiles.push(clean);
+            localStorage.setItem("sammyFlixProfiles_"+currentUser.email,JSON.stringify(profiles));
+            activeProfile=clean;loadUserFavorites();renderProfiles();renderCurrentView();
+            addNotification("Profile "+clean+" created.");
+        }
+        function switchProfile(name) {
+            if(!currentUser)return;
+            if(!getAllProfiles().includes(name))return;
+            activeProfile=name;loadUserFavorites();renderProfiles();renderCurrentView();
+        }
+        function showCollection(genre) {
+            if(!currentUser){openAccountModal();setAccountMessage("Sign in to use your collections.");return;}
+            favoritesOnly=true;currentCategory="All";searchText="";
+            document.getElementById("search").value="";
+            const items=allItems().filter(item=>favorites.includes(item.title) && (genre==="All" || (item.genre||"").toLowerCase().includes(genre.toLowerCase())));
+            document.getElementById("sectionTitle").textContent=genre==="All"?"My Saved Collection":genre+" Collection";
+            displayContent(items);
+        }
+        function savePlaybackPreferences() {
+            const prefs={subtitles:document.getElementById("subtitlePreference").value,audio:document.getElementById("audioPreference").value};
+            localStorage.setItem("sammyFlixPlaybackPrefs",JSON.stringify(prefs));
+            document.getElementById("languageNote").textContent="Saved: "+prefs.subtitles+" subtitles · "+prefs.audio+". Provider support may vary.";
+        }
+        function loadPlaybackPreferences() {
+            try {
+                const p=JSON.parse(localStorage.getItem("sammyFlixPlaybackPrefs")||"{}");
+                if(p.subtitles)document.getElementById("subtitlePreference").value=p.subtitles;
+                if(p.audio)document.getElementById("audioPreference").value=p.audio;
+            } catch(error) {}
+        }
+        function renderFeatureHub() {
+            const items=allItems();
+            const recent= viewedTitles.map(title=>items.find(item=>item.title===title)).filter(Boolean).slice(0,5);
+            const continueList=document.getElementById("continueList");
+            continueList.innerHTML=recent.length?"":"<small>No recently opened titles yet. Open a title's details to see it here.</small>";
+            recent.forEach(item=>{const el=document.createElement("div");el.className="sf-mini-item";el.textContent=item.title+" · "+item.type;el.onclick=()=>showDetails(item);continueList.appendChild(el);});
+            const liked=items.filter(item=>favorites.includes(item.title));
+            const genres=[...new Set(liked.flatMap(item=>(item.genre||"").split(",").map(x=>x.trim()).filter(Boolean)))];
+            const recs=items.filter(item=>!favorites.includes(item.title) && genres.some(g=>(item.genre||"").toLowerCase().includes(g.toLowerCase()))).slice(0,5);
+            const recList=document.getElementById("recommendList");
+            recList.innerHTML=recs.length?"":"<small>Save a few titles to get genre-based suggestions.</small>";
+            recs.forEach(item=>{const el=document.createElement("div");el.className="sf-mini-item";el.textContent=item.title+" · "+(item.genre||item.type);el.onclick=()=>showDetails(item);recList.appendChild(el);});
+            const titleSelect=document.getElementById("reviewTitle");
+            const prior=titleSelect.value;titleSelect.innerHTML="";
+            items.filter(item=>item.type!=="Game").forEach(item=>{const op=document.createElement("option");op.value=item.title;op.textContent=item.title;titleSelect.appendChild(op);});
+            if([...titleSelect.options].some(o=>o.value===prior))titleSelect.value=prior;
+            renderProfiles();renderReviews();renderAdminStats();
+        }
+        function getReviews() {
+            try {const data=JSON.parse(localStorage.getItem("sammyFlixReviews")||"[]");return Array.isArray(data)?data:[];} catch(error){return [];}
+        }
+        function submitReview() {
+            const title=document.getElementById("reviewTitle").value;
+            const rating=Number(document.getElementById("reviewRating").value);
+            const review=document.getElementById("reviewText").value.trim();
+            if(!title || !review){alert("Choose a title and write a short review first.");return;}
+            const reviews=getReviews();reviews.unshift({title,rating,review,profile:currentUser?activeProfile:"Guest",date:new Date().toLocaleDateString()});
+            localStorage.setItem("sammyFlixReviews",JSON.stringify(reviews.slice(0,100)));
+            document.getElementById("reviewText").value="";renderReviews();renderAdminStats();
+        }
+        function renderReviews() {
+            const box=document.getElementById("reviewList");if(!box)return;
+            const reviews=getReviews().slice(0,5);box.innerHTML=reviews.length?"":"<small>No reviews yet.</small>";
+            reviews.forEach(r=>{const el=document.createElement("div");el.className="sf-mini-item";el.textContent=r.title+" · "+"★".repeat(r.rating)+" · "+r.review;box.appendChild(el);});
+        }
+        function renderAdminStats() {
+            const box=document.getElementById("adminStats");if(!box)return;
+            const items=allItems();
+            const values=[["Titles",items.filter(i=>i.type!=="Game").length],["Games",items.filter(i=>i.type==="Game").length],["Saved titles",favorites.length],["Reviews",getReviews().length]];
+            box.innerHTML="";
+            values.forEach(([label,value])=>{const el=document.createElement("div");el.className="sf-stat";const strong=document.createElement("strong");strong.textContent=value;el.append(strong,document.createTextNode(label));box.appendChild(el);});
+        }
+
+        renderFeatureHub();
+        loadPlaybackPreferences();
+</script>
 
 
 </body>
