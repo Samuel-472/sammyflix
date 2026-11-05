@@ -2043,6 +2043,7 @@
             saveUserFavorites();
             addNotification((favorites.includes(title) ? "Saved " : "Removed ") + title + (favorites.includes(title) ? " to your list." : " from your list."));
             renderCurrentView();
+            renderFeatureHub();
         }
 
         function showFavorites() {
@@ -2259,6 +2260,7 @@
             loadUserFavorites();
             updateAccountDisplay();
             renderCurrentView();
+            renderFeatureHub();
         }
 
         function restoreRememberedUser() {
@@ -2334,6 +2336,7 @@
                 console.warn("SammyFlix could not clear the remembered session.", error);
             }
             updateAccountDisplay();
+            renderFeatureHub();
             closeProfileModal();
             showCategory("All");
             setStatus("You are signed out. Sign in to use your personal list.");
@@ -2428,7 +2431,7 @@
         function switchProfile(name) {
             if(!currentUser)return;
             if(!getAllProfiles().includes(name))return;
-            activeProfile=name;loadUserFavorites();renderProfiles();renderCurrentView();
+            activeProfile=name;loadUserFavorites();renderProfiles();renderCurrentView();renderFeatureHub();
         }
         function showCollection(genre) {
             if(!currentUser){openAccountModal();setAccountMessage("Sign in to use your collections.");return;}
